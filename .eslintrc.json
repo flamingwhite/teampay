@@ -1,6 +1,7 @@
 {
 	"parser": "babel-eslint",
 	"ecmaFeatures": {
+		"experimentalDecorators": true,
 		"jsx": true
 	},
 	"plugins": [
@@ -14,7 +15,6 @@
 		"sourceType": "module",
 		"ecmaFeatures": {
 			"experimentalObjectRestSpread": true,
-			"experimentalDecorators": true,
 			"jsx": true
 		}
 	},
