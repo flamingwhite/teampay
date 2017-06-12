@@ -14,18 +14,18 @@ let addTodo = text => {
 }
 
 let toggleTodo = todo => {
-	let newContent = {
-		...todo,
-		done: !todo.done
-	};
-
 	console.log('toggle todo ', JSON.stringify(todo));
-
 	TodoRef.updateById(todo._id, { done: !todo.done });
 }
+
+let removeTodo = todoId => TodoRef.removeById(todoId);
+
+let updateTodo = (_id, patch) => TodoRef.updateById(_id, patch);
 
 export {
 	TodoRef,
 	addTodo,
-	toggleTodo
+	toggleTodo,
+	removeTodo,
+	updateTodo
 };

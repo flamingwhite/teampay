@@ -1,10 +1,11 @@
 import React from 'react';
 import { Text, Button, ListItem, Left, Body, Right, Icon } from 'native-base';
+import {object, func} from 'prop-types'
 
-const TodoItem = ({todo, toggleTodo}) => {
+const TodoItem = ({todo, toggleTodo, onTodoClick}) => {
 	console.log('item ', todo)
 	return (
-		<ListItem icon onPress={evt => toggleTodo((todo))}>
+		<ListItem icon onPress={evt => onTodoClick((todo))}>
 			<Left>
 				<Icon name="bluetooth" />
 			</Left>
@@ -19,6 +20,12 @@ const TodoItem = ({todo, toggleTodo}) => {
 			</Right>
 		</ListItem>
 	)
+}
+
+TodoItem.propTypes = {
+	todo: object,
+	toggleTodo: func,
+	onTodoClick: func
 }
 
 export default TodoItem;

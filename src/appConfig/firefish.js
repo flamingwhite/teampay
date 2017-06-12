@@ -65,10 +65,12 @@ let fireArrayOnce = refOrPath => fireOnce(refOrPath).map(data => Object.entries(
 	...value
 })));
 
-let fireUpdateById = curry((refOrPath, _id, patch) => {
-	let ref = getRef(refOrPath);
-	ref.child(_id).update(patch);
-})
+// let fireUpdateById = curry((refOrPath, _id, patch) => {
+// 	let ref = getRef(refOrPath);
+// 	return ref.child(_id).update(patch);
+// })
+
+let fireUpdateById = curry((refOrPath, _id, patch) => getRef(refOrPath).child(_id).update(patch));
 
 let fireRef = refOrPath => {
 	let ref = getRef(refOrPath);

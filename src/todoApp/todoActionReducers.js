@@ -5,6 +5,7 @@ import { fireRef } from '../appConfig/firefish';
 let TodoActions = convertArrayToMirrorAction([
 	'ADD_TODO',
 	'TOGGLE_TODO',
+	'SET_VISIBILITY_FILTER',
 	'SYNC_TODOS'
 ]);
 
@@ -13,14 +14,20 @@ console.log('TODOACTIOS',TodoActions);
 let todoHandlers = {
 	[TodoActions.ADD_TODO]: (state, action) => state.concat(action.todo),
 	[TodoActions.TOGGLE_TODO]: (state, action) => state.map(todo => todo._id == action.todoId ? { ...todo, done: !todo.done } : todo),
-	[TodoActions.SYNC_TODOS]: (state, action) => action.todos
+	[TodoActions.SET_VISIBILITY_FILTER]: (state, action) => ({
+		...state,
+		visibilityFilter: action.filterKey
+	}),
+	[TodoActions.SYNC_TODOS]: (state, action) => ({
+		...state,
+		todos: action.todos
+	})
 };
 
-let TodoReducer = createReducer(state = [{
-	_id: 1001,
-	title: 'Go Wash the clothes',
-	done: false
-}], todoHandlers);
+let TodoReducer = createReducer(state = ({
+	todos: [],
+	visibilityFilter: 'ALL'
+}), todoHandlers);
 
 let todos = fireRef('todos/');
 todos.arrayStream().subscribe(todos => store.dispatch({

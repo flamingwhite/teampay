@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Footer, Button, Icon,  Text, FooterTab, Badge } from 'native-base';
+import {  Footer, Button, Icon,  Text, FooterTab, Badge } from 'native-base';
 
 class AppFooter extends Component {
 	render() {
 		return (
-			<Container>
 				<Footer>
 					<FooterTab>
 						<Button full>
@@ -35,7 +34,6 @@ class AppFooter extends Component {
 						</Button>
 					</FooterTab>
 				</Footer>
-			</Container>
 			);
 	}
 }
