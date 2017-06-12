@@ -1,0 +1,3 @@
+rootProject.name = 'teampay'
+
+include ':app'

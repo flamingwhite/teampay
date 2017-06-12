@@ -1,0 +1,43 @@
+import React, { Component } from 'react';
+import { Container, Footer, Button, Icon,  Text, FooterTab, Badge } from 'native-base';
+
+class AppFooter extends Component {
+	render() {
+		return (
+			<Container>
+				<Footer>
+					<FooterTab>
+						<Button full>
+							<Text>Footer</Text>
+						</Button>
+					</FooterTab>
+					<FooterTab>
+						<Button full>
+							<Text>Footer</Text>
+						</Button>
+					</FooterTab>
+					<FooterTab>
+						<Button badge vertical>
+							<Badge>
+								<Text>2</Text>
+							</Badge>
+							<Icon name="apps" />
+							<Text>Apps</Text>
+						</Button>
+					</FooterTab>
+					<FooterTab>
+						<Button active badge vertical>
+							<Badge>
+								<Text>51</Text>
+							</Badge>
+							<Icon active name="navigate" />
+							<Text>Navigate</Text>
+						</Button>
+					</FooterTab>
+				</Footer>
+			</Container>
+			);
+	}
+}
+
+export default AppFooter;

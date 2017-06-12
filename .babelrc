@@ -1,0 +1,7 @@
+{
+  "presets": ["react-native-stage-0"],
+  "plugins": [
+	  "transform-decorators-legacy",
+	  "transform-class-properties", "transform-object-rest-spread", "transform-do-expressions", "syntax-trailing-function-commas"
+  ]
+}
