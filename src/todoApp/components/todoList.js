@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { func } from 'prop-types';
 import { Container, Content, List, ListItem, Text } from 'native-base';
 import TodoItem from './todoItem';
 
@@ -12,5 +13,10 @@ const TodoList = ({ todos, toggleTodo }) => {
 		</Container>
 	);
 }
+
+TodoList.propTypes = {
+	todos: func,
+	toggleTodo: func
+};
 
 export default TodoList;
