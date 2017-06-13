@@ -1,7 +1,7 @@
 import React  from 'react';
 import { func, arrayOf, object } from 'prop-types';
 import { Container,  List } from 'native-base';
-import TodoItem from './todoItem';
+import TodoItem from './TodoItem';
 
 const TodoList = ({ todos, toggleTodo, onTodoClick }) => {
 	return (

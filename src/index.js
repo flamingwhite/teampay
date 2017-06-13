@@ -66,6 +66,11 @@ const startApp = () => {
 				title: 'TODOScreen One' // title of the screen as appears in the nav bar (optional)
 			},
 			{
+				label: 'MapDemp',
+				screen: 'mapMainScreen',
+				title: 'MapsToTest'
+			},
+			{
 				label: 'Two',
 				screen: 'testScreen',
 				title: 'Screen Two'

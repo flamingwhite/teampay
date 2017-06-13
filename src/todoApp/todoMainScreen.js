@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { object, arrayOf } from 'prop-types';
 import { connect } from 'react-redux';
-import TodoInput from './components/todoInput';
+import TodoInput from './components/TodoInput';
 import { View,  Text,   Content, Footer } from 'native-base';
 import { addTodo, toggleTodo } from './todoService';
 import TodoListContainer from './components/TodoListContainer';
-import AppHeader from '../layout/appHeader';
 import FooterFilterLink from './components/TodoFilterTab';
 
 @connect( state => ({ todos: state.todoChunk.todos }))
@@ -32,7 +31,6 @@ class TodoApp extends Component {
 		let {todos} = this.props;
 		return (
 			<View style={ { flex: 1 } }>
-				<AppHeader></AppHeader>
 				<Content>
 					<TodoInput addTodo={ addTodo }></TodoInput>
 					<TodoListContainer style={{ flex: 1 }} todos={todos} toggleTodo={toggleTodo} onTodoClick={this.onTodoClick}></TodoListContainer>
