@@ -4,6 +4,11 @@ import { StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import EIcon from 'react-native-vector-icons/EvilIcons';
+const myIcon = (<Icon name="rocket" size={30} color="#900" />)
+const eIcon = (<EIcon name="camera" size={80}   color="orange" />)
+
 
 console.log(MapView);
 
@@ -50,6 +55,8 @@ class MapMainScreen extends Component {
 			<Container>
 				<Content style={ styles.container }>
 					<Text>Map up Map time is {this.props.time}</Text>
+					{myIcon}
+					{eIcon}
 					<Button onPress={ this.navigateToRouteInput }>
 						<Text>Add a Route</Text>
 					</Button>

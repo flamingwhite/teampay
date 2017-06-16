@@ -38,6 +38,8 @@ import {
 	registerScreens
 } from './screens';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import store from './appConfig/reduxStore';
 
 registerScreens(store, Provider);
@@ -51,6 +53,33 @@ const navigatorStyle = {
 	drawUnderTabBar: true
 };
 
+let settingsOutlineIcon, navigationOutline, homeIconOutline,
+	settingsIcon, navigationIcon, homeIcon;
+
+const populateIcons = function () {
+	return new Promise(function (resolve, reject) {
+		Promise.all(
+			[
+				Icon.getImageSource('ios-settings-outline', 30),
+				Icon.getImageSource('ios-navigate-outline', 30),
+				Icon.getImageSource('ios-home-outline', 30),
+				Icon.getImageSource('ios-settings', 30),
+				Icon.getImageSource('ios-navigate', 30),
+				Icon.getImageSource('ios-home', 30),
+				
+			]
+		).then((values) => {
+			[settingsOutlineIcon, navigationOutline, homeIconOutline, settingsIcon, navigationIcon, homeIcon] = values;
+			resolve(true);
+		}).catch((error) => {
+			console.log(error);
+			reject(error);
+		}).done();
+	});
+};
+
+const loadingIconAndStart = () => populateIcons().then(() => startApp());
+
 const startApp = () => {
 	// Navigation.startSingleScreenApp({
 	// 	screen: {
@@ -63,23 +92,29 @@ const startApp = () => {
 		tabs: [{
 				label: 'One', // tab label as appears under the icon in iOS (optional)
 				screen: 'todoMainScreen', // unique ID registered with Navigation.registerScreen
-				title: 'TODOScreen One' // title of the screen as appears in the nav bar (optional)
+				title: 'TODOScreen One', // title of the screen as appears in the nav bar (optional)
+				icon: homeIconOutline,
+				selectedIcon: homeIcon
 			},
 			{
 				label: 'MapDemp',
 				screen: 'mapMainScreen',
-				title: 'MapsToTest'
+				title: 'MapsToTest',
+				icon: navigationOutline,
+				selectIcon: navigationIcon
 			},
 			{
-				label: 'Two',
-				screen: 'testScreen',
-				title: 'Screen Two'
+				label: 'Locations',
+				screen: 'locationMainScreen',
+				title: 'My Locations',
+				icon: settingsOutlineIcon,
+				selectIcon: settingsIcon
 			}
 		],
 		tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
-			tabBarButtonColor: '#ffff00', // optional, change the color of the tab icons and text (also unselected)
+			tabBarButtonColor: 'gray', // optional, change the color of the tab icons and text (also unselected)
 			tabBarSelectedButtonColor: '#ff9900', // optional, change the color of the selected tab icon and text (only selected)
-			tabBarBackgroundColor: '#551A8B' // optional, change the background color of the tab bar
+			tabBarBackgroundColor: 'white' // optional, change the background color of the tab bar
 		},
 		appStyle: {
 			orientation: 'portrait' // Sets a specific orientation to the entire app. Default: 'auto'. Supported values: 'auto', 'landscape', 'portrait'
@@ -101,4 +136,4 @@ const startApp = () => {
 
 }
 
-export default startApp;
+export default loadingIconAndStart;

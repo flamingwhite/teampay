@@ -3,8 +3,6 @@ import { Container, Text, Content, Input, InputGroup } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
-import GooglePlaceInput from './components/GooglePlaceInput';
-import RouteTimePicker from './components/RouteTimePicker';
 import PropTypes from 'prop-types';
 import RouteInputForm from './components/RouteInputForm';
 

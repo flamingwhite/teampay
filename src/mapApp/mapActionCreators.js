@@ -22,6 +22,13 @@ const fetchDirection = (placeOne, placeTwo) => dispatch => httpActionDispatcher(
 	url: createDirectionAPIUrl(placeOne, placeTwo),
 });
 
+const fetchDirectionData = routeConfig => dispatch => {
+
+	let { fromLocation, toLocation } = routeConfig;
+	
+
+}
+
 export {
 	MapActions,
 	fetchDirection

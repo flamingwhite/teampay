@@ -8,7 +8,7 @@ const homePlace = {description: 'Home', geometry: { location: { lat: 48.8152937,
 const workPlace = {description: 'Work', geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }};
 
 const GooglePlaceInput = props => {
-	const { onSelect, ...rest } = props;
+	const { onSelect, defaultLocations, ...rest } = props;
 
 	return (
 		<GooglePlacesAutocomplete
@@ -22,8 +22,8 @@ const GooglePlaceInput = props => {
 				// types: '(cities)', // default: 'geocode'
 			}}
 			onPress={onSelect}
-			getDefaultValue={() => 'def'}
-			predefinedPlaces={[homePlace, workPlace]}
+			getDefaultValue={() => ''}
+			predefinedPlaces={defaultLocations}
 			debounce={200}
 			renderRightButton={() => <Text>Right></Text>}
 			{...rest}
@@ -34,37 +34,5 @@ const GooglePlaceInput = props => {
 }
 
 
-// class GooglePlaceInput extends Component {
-
-// 	constructor(props) {
-// 		super(props);
-// 	}
-
-
-// 	render() {
-// 		return (
-
-// 			<GooglePlacesAutocomplete
-// 				placeholder='Search'
-// 				minLength={2} // minimum length of text to search
-// 				autoFocus={false}
-// 				query={{
-// 					language: 'en', // language of the results
-// 					key: 'AIzaSyAg3pFdbpVP6hTSrZ5ZWAczWCfy6eOc1zQ',
-// 					// types: '(cities)', // default: 'geocode'
-// 				}}
-// 				onPress={(data, details = null) => {
-// 					console.log('press data', data, details);
-// 				}}
-// 				getDefaultValue={() => 'defaultValue'}
-// 				predefinedPlaces={[ homePlace, workPlace ]}
-// 				debounce={200}
-// 				renderRightButton={()=><Text>Right></Text>}
-
-// 			/>
-
-// 		)
-// 	}
-// }
 
 export default GooglePlaceInput;

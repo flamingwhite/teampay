@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Text, Content, Input, InputGroup } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import GooglePlaceInput from './GooglePlaceInput';
+import GooglePlaceInput from '../../genericCmps/GooglePlaceInput';
 import RouteTimePicker from './RouteTimePicker';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
