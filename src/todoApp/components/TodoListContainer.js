@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TodoList from './TodoList';
+import RichArray from '../../lib/richArray';
 import PropTypes from 'prop-types';
 
 
-const getFilteredTodos = (todos, filter) => todos.filter(td => filter=='ALL' || (filter=='DONE' && td.done) || (filter=='UNDONE'&&!td.done))
+const getFilteredTodos = (todos, filter) => RichArray(todos).filter(td => filter=='ALL' || (filter=='DONE' && td.done) || (filter=='UNDONE'&&!td.done))
 
 @connect(
 	state => ({

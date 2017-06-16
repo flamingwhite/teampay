@@ -1,48 +1,70 @@
 import React, { Component } from 'react';
-import { Container, Header, Text, Title, Content, Footer, FooterTab, Button, Icon } from 'native-base';
+import { Container, Text, Content, Button } from 'native-base';
 import { StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 console.log(MapView);
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
+	container: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+	},
+	map: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+	},
 });
 
-export default class MapMainScreen extends Component {
+@connect(
+	state => ({ time: state.mapChunk.time })
+)
+class MapMainScreen extends Component {
+
+	constructor(props) {
+		super(props);
+		this.navigateToRouteInput = this.navigateToRouteInput.bind(this);
+
+	}
+	navigateToRouteInput() {
+		let {navigator} = this.props;
+		navigator.push({
+			screen: 'routeInputScreen',
+			title: 'Create a New Route',
+			animated: true
+		});
+	}
+
 	render() {
 		return (
 			<Container>
-				<Header>
-					<Title>Header</Title>
-				</Header>
-				<Content style={styles.container}>
-					<Text>What's up Map</Text>
-					<MapView style={styles.map} initialRegion={ { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421, } } style={{flex:1, height:300, width:300}}/>
+				<Content style={ styles.container }>
+					<Text>Map up Map time is {this.props.time}</Text>
+					<Button onPress={ this.navigateToRouteInput }>
+						<Text>Add a Route</Text>
+					</Button>
+					<MapView style={styles.map} initialRegion={{ latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421, }} style={{ height: 500 }}
+
+					/>
 				</Content>
-				<Footer>
-					<FooterTab>
-						<Button transparent>
-							<Icon name='ios-call' />
-						</Button>
-					</FooterTab>
-				</Footer>
 			</Container>
 			);
 	}
 }
+
+
+MapMainScreen.propTypes = {
+	navigator: PropTypes.object
+};
+
+export default MapMainScreen;

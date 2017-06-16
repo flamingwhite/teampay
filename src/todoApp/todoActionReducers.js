@@ -12,8 +12,6 @@ let TodoActions = convertArrayToMirrorAction([
 console.log('TODOACTIOS',TodoActions);
 
 let todoHandlers = {
-	[TodoActions.ADD_TODO]: (state, action) => state.concat(action.todo),
-	[TodoActions.TOGGLE_TODO]: (state, action) => state.map(todo => todo._id == action.todoId ? { ...todo, done: !todo.done } : todo),
 	[TodoActions.SET_VISIBILITY_FILTER]: (state, action) => ({
 		...state,
 		visibilityFilter: action.filterKey
@@ -24,10 +22,10 @@ let todoHandlers = {
 	})
 };
 
-let TodoReducer = createReducer(state = ({
-	todos: [],
-	visibilityFilter: 'ALL'
-}), todoHandlers);
+let TodoReducer = createReducer(todoHandlers, {
+	visibilityFilter: 'ALL',
+	todos: []
+});
 
 let todos = fireRef('todos/');
 todos.arrayStream().subscribe(todos => store.dispatch({

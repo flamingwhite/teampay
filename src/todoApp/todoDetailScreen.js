@@ -10,6 +10,10 @@ import { dissoc } from 'ramda';
 class TodoScreen extends Component {
 	constructor(props) {
 		super(props);
+		// this.props.activeTodo = this.props.activeTodo || {};
+		if (!this.props.activeTodo) {
+			this.props.navigator.pop();
+		}
 		this.remove = this.remove.bind(this);
 		this.toggle = this.toggle.bind(this);
 		this.update = this.update.bind(this);
@@ -42,6 +46,15 @@ class TodoScreen extends Component {
 	render() {
 		console.log('redner of detail screen');
 		let {activeTodo, navigator} = this.props;
+		if (!activeTodo) {
+			console.log('going back to todo main screen');
+			this.props.navigator.resetTo({
+				screen: 'todoMainScreen',
+				animated: true
+			})
+			return <View/>;
+
+		}
 		let { _id } = activeTodo;
 		let { text } = this.state;
 		console.log('the _id toupdate', _id);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Badge, Icon, Text, FooterTab } from 'native-base';
-import { string, boolean, func } from 'prop-types';
+import { string, bool, func } from 'prop-types';
 
 const FooterLink = props => {
 
@@ -25,7 +25,7 @@ FooterLink.propTypes = {
 	text: string,
 	badge: string,
 	icon: string,
-	active: boolean,
+	active: bool,
 	onClick: func
 };
 

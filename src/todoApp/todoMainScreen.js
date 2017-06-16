@@ -26,6 +26,7 @@ class TodoApp extends Component {
 		});
 	}
 
+
 	render() {
 		console.log('Render of TodoApp.index');
 		let {todos} = this.props;
