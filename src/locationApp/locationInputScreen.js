@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Text, Content, Input, InputGroup, Button } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { Container, Button, Text } from 'native-base';
 import { connect } from 'react-redux';
-import GooglePlaceInput from '../genericCmps/GooglePlaceInput';
-import { Field, reduxForm } from 'redux-form';
-import ReduxInput from '../genericCmps/reduxInput';
+import { reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import UUID from '../lib/uuidTool';
+import { addLocation } from './locationActionCreators';
+import LocationItemForm from './components/LocationItemForm';
 
-const renderGoogleInput = ({ input: { onChange } }) => <GooglePlaceInput onSelect={onChange}/>
 
 @connect(
 	state => ({
@@ -16,39 +13,39 @@ const renderGoogleInput = ({ input: { onChange } }) => <GooglePlaceInput onSelec
 	})
 )
 @reduxForm({
-	form:'locationInput'	
+	form: 'locationInput'
 })
 class LocationInputScreen extends Component {
+	constructor(props) {
+		super(props);
+		this.createLocation = this.createLocation.bind(this);
+
+	}
+	createLocation(values) {
+		let {dispatch, navigator} = this.props;
+		dispatch(addLocation(values));
+		navigator.pop();
+	}
 	render() {
 
-		const { handleSubmit, dispatch } = this.props;
-		const createLocation = values => { }
+		const {handleSubmit} = this.props;
 
 		return (
 			<Container>
-				<Content>
-					<Field
-						name="location"
-						component={renderGoogleInput}
-					/>
-					<Field
-						name="alias"
-						component={ReduxInput}
-					/>
-					<Field
-						name="icon"
-						component={Input}
-					/>
-					<Button onPress={handleSubmit(createLocation)}>
-						<Text>Add Location</Text>
-					</Button>
-					
-				</Content>
+				<LocationItemForm/>
+				<Button success onPress={handleSubmit(this.createLocation)}>
+					<Text>Add a Location</Text>
+				</Button>
 			</Container>
 
 			);
 	}
 }
 
+LocationInputScreen.propTypes = {
+	dispatch: PropTypes.func,
+	navigator: PropTypes.object,
+	handleSubmit: PropTypes.func
+};
 
 export default LocationInputScreen;

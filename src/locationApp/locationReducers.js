@@ -12,9 +12,17 @@ const locationHandler = {
 		locations: state.locations.map(loc => loc.id == action.id ? ({
 			...loc,
 			...action.location
-		}): loc)
+		}) : loc)
+	}),
+
+	[LocationActions.DELETE_LOCATION]: (state, { id }) => ({
+		...state,
+		locations: state.locations.map(loc => loc.id == id ? {
+			...loc,
+			deleted: true
+		}: loc)
 	})
-}
+};
 
 const LocationReducer = createReducer(locationHandler, {
 	locations: []

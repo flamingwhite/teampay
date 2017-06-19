@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		bottom: 0,
+		height:400
 	},
 });
 
@@ -51,18 +52,25 @@ class MapMainScreen extends Component {
 	}
 
 	render() {
+		const geocode = { latitude: 33.91, longitude: -84.458 };
 		return (
 			<Container>
 				<Content style={ styles.container }>
+					<MapView style={styles.map} initialRegion={{...geocode,  latitudeDelta: 0.3, longitudeDelta: 0.2, }}
+					style={{height: 350}}>
+						<MapView.Marker
+							title="this is title"
+							description="hello marker"
+							coordinate={{latitude: 33.91, longitude: -84.458}}
+						/>
+
+					</MapView>
 					<Text>Map up Map time is {this.props.time}</Text>
 					{myIcon}
 					{eIcon}
 					<Button onPress={ this.navigateToRouteInput }>
 						<Text>Add a Route</Text>
 					</Button>
-					<MapView style={styles.map} initialRegion={{ latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421, }} style={{ height: 500 }}
-
-					/>
 				</Content>
 			</Container>
 			);

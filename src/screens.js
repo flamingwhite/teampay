@@ -7,8 +7,9 @@ import TestScreen from './testApp';
 import TodoDetailScreen from './todoApp/TodoDetailScreen';
 import MapMainScreen from './mapApp/MapMainScreen';
 import RouteInputScreen from './mapApp/RouteInputScreen';
-import LocationMainScreen from './locationApp/locationMainScreen';
-import LocationInputScreen from './locationApp/locationInputScreen';
+import LocationMainScreen from './locationApp/LocationMainScreen';
+import LocationInputScreen from './locationApp/LocationInputScreen';
+import LocationEditScreen from './locationApp/LocationEditScreen';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
@@ -19,4 +20,5 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('routeInputScreen', () => RouteInputScreen, store, Provider);
 	Navigation.registerComponent('locationMainScreen', () => LocationMainScreen, store, Provider);
 	Navigation.registerComponent('locationInputScreen', () => LocationInputScreen, store, Provider);
+	Navigation.registerComponent('locationEditScreen', () => LocationEditScreen, store, Provider);
 }

@@ -1,25 +1,32 @@
 import React from 'react';
-import {CardItem, Text, Icon, Right } from 'native-base';
+import { ListItem, Text, Icon, Right } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 
-const LocationItem = ({icon, description}) => {
-
+const LocationItem = (props) => {
+	const {icon, alias, meta: {description}, onLocationPress, ...rest} = props;
 	return (
-		<CardItem>
-			<Ionicons active name={icon} size={30} />
-			<Text>{description}</Text>
+		<ListItem onPress={ onLocationPress } {...rest}>
+			<Ionicons active name={ 'ios-' + icon } size={ 30 } />
+			<Text>
+				{ alias },
+				{ description }
+			</Text>
 			<Right>
 				<Icon name="arrow-forward" />
 			</Right>
-		</CardItem>
+		</ListItem>
 	)
 
 }
 
 LocationItem.propTypes = {
+	id: PropTypes.string,
+	onLocationPress: PropTypes.func,
 	icon: PropTypes.string,
-	description: PropTypes.string
+	alias: PropTypes.string,
+	description: PropTypes.string,
+	meta: PropTypes.object
 };
 
 export default LocationItem;
