@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Field } from 'redux-form';
-import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
-import { Content, View, Button, Text, Input } from 'native-base';
+import { Content, View, Text, Input } from 'native-base';
 import ReduxInput from '../../genericCmps/reduxInput';
 import GooglePlaceInput from '../../genericCmps/GooglePlaceInput';
 import MapView from 'react-native-maps';
+import PropTypes from 'prop-types';
 
 
 const styles = StyleSheet.create({
@@ -76,6 +76,10 @@ class LocationItemForm extends Component {
 	}
 
 }
+
+LocationItemForm.propTypes = {
+	input: PropTypes.object
+};
 
 
 
