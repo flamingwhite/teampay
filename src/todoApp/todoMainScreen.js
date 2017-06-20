@@ -6,6 +6,8 @@ import { View,  Text,   Content, Footer } from 'native-base';
 import { addTodo, toggleTodo } from './todoService';
 import TodoListContainer from './components/TodoListContainer';
 import FooterFilterLink from './components/TodoFilterTab';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+// import CameraTest from './components/CameraTest';
 
 @connect( state => ({ todos: state.todoChunk.todos }))
 class TodoApp extends Component {
@@ -32,11 +34,19 @@ class TodoApp extends Component {
 		let {todos} = this.props;
 		return (
 			<View style={ { flex: 1 } }>
-				<Content>
-					<TodoInput addTodo={ addTodo }></TodoInput>
-					<TodoListContainer style={{ flex: 1 }} todos={todos} toggleTodo={toggleTodo} onTodoClick={this.onTodoClick}></TodoListContainer>
-					<Text></Text>
-				</Content>
+				<ScrollableTabView>
+					<Content tabLabel="hello">
+						<TodoInput addTodo={ addTodo }></TodoInput>
+						<TodoListContainer style={{ flex: 1 }} todos={todos} toggleTodo={toggleTodo} onTodoClick={this.onTodoClick}></TodoListContainer>
+						<Text></Text>
+					</Content>
+					<Content tabLabel="World">
+						<Text>World text</Text>
+						{/*<CameraTest></CameraTest> */}
+					</Content>
+					<Content tabLabel="How">
+					</Content>
+				</ScrollableTabView>
 				<Footer>
 					<FooterFilterLink filterKey="ALL" text="All"></FooterFilterLink>
 					<FooterFilterLink filterKey="DONE" text="Completed"></FooterFilterLink>
