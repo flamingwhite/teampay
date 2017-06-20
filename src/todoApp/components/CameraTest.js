@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
   View
 } from 'react-native';
-import Camera from 'react-native-camera';
+var Camera =require('react-native-camera');
 
 class CameraTest extends Component {
   render() {
