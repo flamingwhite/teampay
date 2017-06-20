@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 import RouteInputForm from './components/RouteInputForm';
+import RouteItemForm from './components/RouteItemForm';
+import {reduxForm} from 'redux-form';
+
 
 console.log('in input screen', MapView);
 
@@ -16,14 +19,18 @@ console.log('in input screen', MapView);
 		routeForm: state.mapChunk.defaultRouteConfig
 	})
 )
+@reduxForm({
+	form: 'routeInput'
+})
 class RouteInputScreen extends Component {
 	render() {
-		let {startTime, endTime} = this.props.routeForm;
 		return (
 			<Container>
 				<Content>
 					<Text>Input a Route</Text>
 					<RouteInputForm></RouteInputForm>
+					<RouteInputForm></RouteInputForm>
+					<RouteInputForm/>
 				</Content>
 			</Container>
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AppState } from 'react-native';
 import { object, arrayOf } from 'prop-types';
 import { connect } from 'react-redux';
 import TodoInput from './components/TodoInput';
@@ -7,7 +8,8 @@ import { addTodo, toggleTodo } from './todoService';
 import TodoListContainer from './components/TodoListContainer';
 import FooterFilterLink from './components/TodoFilterTab';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-// import CameraTest from './components/CameraTest';
+import CameraTest from './components/CameraTest';
+import { appStateChange } from '../appState/appStateActionCreator';
 
 
 
@@ -55,6 +57,22 @@ class TodoApp extends Component {
 	constructor(props) {
 		super(props);
 		this.onTodoClick = this.onTodoClick.bind(this);
+		this.handleStateChange = this.handleStateChange.bind(this);
+	}
+
+	componentDidMount() {
+		console.log("RESISTER APP STATE CHANGE");
+		AppState.addEventListener('change', this.handleStateChange);
+	}
+	componentWillUnmount() {
+		console.log("DESTROY APP STATE CHANGE LISTENER");
+		AppState.removeEventListener('change', this.handleStateChange);
+	}
+
+	handleStateChange(nextState) {
+		console.log("STATE CHANGE TO ", nextState);
+		this.props.dispatch(appStateChange(nextState));
+
 	}
 
 	onTodoClick(todo) {
@@ -81,6 +99,7 @@ class TodoApp extends Component {
 						<Text></Text>
 					</Content>
 					<Content tabLabel="World">
+						<CameraTest></CameraTest>
 						<Text>World text</Text>
 					</Content>
 					<Content tabLabel="How">

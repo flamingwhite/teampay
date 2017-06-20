@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import LocationList from '../components/LocationList';
 import PropTypes from 'prop-types';
+import { visibileLocationSelector } from '../locationSelectors';
 
 
 @connect(
 	state => ({
-		locations: state.locationChunk.locations.filter(loc => !loc.deleted)
+		locations: visibileLocationSelector(state)
 	})
 )
 class LocationListContainer extends Component {

@@ -9,6 +9,7 @@ import { Field, reduxForm } from 'redux-form';
 import ReduxInput from '../../genericCmps/reduxInput';
 import { Button } from 'native-base';
 import { fetchDirection } from '../mapActionCreators';
+import RouteItemForm from './RouteItemForm';
 
 
 const renderTimePicker = ({input: {onChange, value}}) => <RouteTimePicker onDateChange={onChange} date={value} />
@@ -24,7 +25,7 @@ const renderGoogleInput = ({ input: { onChange } }) => <GooglePlaceInput onSelec
 @reduxForm({
 	form:'routeInput'
 })
-class RouteInputScreen extends Component {
+class RouteInputForm extends Component {
 	render() {
 		const {handleSubmit, dispatch} = this.props
 		const mySubmit = values => {
@@ -40,6 +41,7 @@ class RouteInputScreen extends Component {
 		return (
 			<Container>
 				<Content>
+					<RouteItemForm></RouteItemForm>
 					<Field
 						name="fromLocation"
 						component={renderGoogleInput}
@@ -70,11 +72,11 @@ class RouteInputScreen extends Component {
 	}
 }
 
-RouteInputScreen.proptypes = {
+RouteInputForm.proptypes = {
 	startTime: PropTypes.string,
 	endTime: PropTypes.string,
 	routeForm: PropTypes.object,
 	handleSubmit: PropTypes.func
 }
 
-export default RouteInputScreen;
+export default RouteInputForm;

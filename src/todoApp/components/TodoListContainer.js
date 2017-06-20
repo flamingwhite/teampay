@@ -3,14 +3,21 @@ import { connect } from 'react-redux';
 import TodoList from './TodoList';
 import RichArray from '../../lib/richArray';
 import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
+
+const visibileTodosSelector = createSelector(
+	state => state.todoChunk.todos,
+	state => state.todoChunk.visibilityFilter,
+	(todos, filter) => RichArray(todos).filter(td => filter=='ALL' || (filter=='DONE' && td.done) || (filter=='UNDONE'&&!td.done))
+)
 
 
-const getFilteredTodos = (todos, filter) => RichArray(todos).filter(td => filter=='ALL' || (filter=='DONE' && td.done) || (filter=='UNDONE'&&!td.done))
+// const getFilteredTodos = (todos, filter) => RichArray(todos).filter(td => filter=='ALL' || (filter=='DONE' && td.done) || (filter=='UNDONE'&&!td.done))
 
 @connect(
 	state => ({
-		todos: state.todoChunk.todos,
-		visibilityFilter: state.todoChunk.visibilityFilter
+		todos: visibileTodosSelector(state)
+		// visibilityFilter: state.todoChunk.visibilityFilter
 	})
 )
 class TodoListContainer extends Component {
@@ -26,8 +33,8 @@ class TodoListContainer extends Component {
 	// }
 
 	render() {
-		let { todos, visibilityFilter } = this.props;
-		return <TodoList {...this.props} todos={getFilteredTodos(todos, visibilityFilter)}></TodoList>
+		let { todos } = this.props;
+		return <TodoList {...this.props} todos={todos}></TodoList>
 	}
 
 }

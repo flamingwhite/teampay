@@ -50,6 +50,7 @@
 		BF265850020847BB8F2CD1BD /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8379560C11124DC5A697F335 /* OFL.txt */; };
 		CF5155C21EF8B93A001AC8EE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF5155AC1EF8B90F001AC8EE /* libRCTPushNotification.a */; };
 		CF5155F41EF8BC85001AC8EE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF5155AC1EF8B90F001AC8EE /* libRCTPushNotification.a */; };
+		CF5155FB1EF8C8F5001AC8EE /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF5155FA1EF8C8E3001AC8EE /* libRCTCamera.a */; };
 		CF94AD1C1EF455F100722C24 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF94AD1B1EF4556600722C24 /* libRNVectorIcons.a */; };
 		CFC79A5F1EEF25C60035CBF2 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC79A5E1EEF25910035CBF2 /* libReactNativeNavigation.a */; };
 		CFE1A2771EF4313D000AA232 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CFE1A26D1EF4313D000AA232 /* Entypo.ttf */; };
@@ -273,6 +274,13 @@
 			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
 			remoteInfo = "RCTPushNotification-tvOS";
 		};
+		CF5155F91EF8C8E3001AC8EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CF5155F51EF8C8E3001AC8EE /* RCTCamera.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RCTCamera;
+		};
 		CF94AD1A1EF4556600722C24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CF94ACFB1EF4556600722C24 /* RNVectorIcons.xcodeproj */;
@@ -352,6 +360,7 @@
 		C2DDDF26F6B044FDBE527C8A /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		C3BE57D9B90341A980DEB21D /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		CF51559B1EF8B90F001AC8EE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		CF5155F51EF8C8E3001AC8EE /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		CF94ACFB1EF4556600722C24 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		CFC79A401EEF25910035CBF2 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		CFE1A26D1EF4313D000AA232 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
@@ -384,6 +393,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF5155FB1EF8C8F5001AC8EE /* libRCTCamera.a in Frameworks */,
 				CF5155F41EF8BC85001AC8EE /* libRCTPushNotification.a in Frameworks */,
 				CFC79A5F1EEF25C60035CBF2 /* libReactNativeNavigation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -579,6 +589,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CF5155F51EF8C8E3001AC8EE /* RCTCamera.xcodeproj */,
 				CF51559B1EF8B90F001AC8EE /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -640,6 +651,14 @@
 			children = (
 				CF5155AC1EF8B90F001AC8EE /* libRCTPushNotification.a */,
 				CF5155AE1EF8B90F001AC8EE /* libRCTPushNotification-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CF5155F61EF8C8E3001AC8EE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CF5155FA1EF8C8E3001AC8EE /* libRCTCamera.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -844,6 +863,10 @@
 				{
 					ProductGroup = 5E91572E1DD0AC6500FF2AA8 /* Products */;
 					ProjectRef = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
+				},
+				{
+					ProductGroup = CF5155F61EF8C8E3001AC8EE /* Products */;
+					ProjectRef = CF5155F51EF8C8E3001AC8EE /* RCTCamera.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -1100,6 +1123,13 @@
 			fileType = archive.ar;
 			path = "libRCTPushNotification-tvOS.a";
 			remoteRef = CF5155AD1EF8B90F001AC8EE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CF5155FA1EF8C8E3001AC8EE /* libRCTCamera.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCamera.a;
+			remoteRef = CF5155F91EF8C8E3001AC8EE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CF94AD1B1EF4556600722C24 /* libRNVectorIcons.a */ = {
@@ -1365,6 +1395,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"$(SRCROOT)/../../../React/**",
 				);
 				INFOPLIST_FILE = teampay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1388,6 +1419,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"$(SRCROOT)/../../../React/**",
 				);
 				INFOPLIST_FILE = teampay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

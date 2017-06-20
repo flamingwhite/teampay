@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  Dimensions,
   StyleSheet,
   Text,
-  TouchableHighlight,
   View
 } from 'react-native';
 var Camera =require('react-native-camera');
@@ -12,9 +10,10 @@ var Camera =require('react-native-camera');
 class CameraTest extends Component {
   render() {
     return (
-      <View style={styles.container}>
+		<View style={styles.container}>
         <Camera
           ref={(cam) => {
+			 console.log('camera is  =====>', cam);
             this.camera = cam;
           }}
           style={styles.preview}
