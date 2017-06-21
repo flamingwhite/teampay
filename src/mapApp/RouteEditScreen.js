@@ -34,14 +34,15 @@ class RouteInputScreen extends Component {
 		
 	}
 	render() {
-		const { handleSubmit } = this.props;
+		const { handleSubmit, route } = this.props;
+		console.log(route,'rhte route to editttt');
 		return (
 			<Container>
 				<Content>
 					<Text>Input a Route</Text>
-					<RouteItemForm>
+					<RouteItemForm initialValues={route}>
 						<Button onPress={handleSubmit(this.createRoute)}>
-							<Text>Add Route</Text>
+							<Text>Update Route</Text>
 						</Button>
 					</RouteItemForm>
 				</Content>

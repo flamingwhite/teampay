@@ -6,6 +6,8 @@ import ReduxInput from '../../genericCmps/reduxInput';
 import GooglePlaceInput from '../../genericCmps/GooglePlaceInput';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
+import { reduxForm } from 'redux-form';
+import { reduxFormValues } from '../../lib/reduxFormTool';
 
 
 const styles = StyleSheet.create({
@@ -31,6 +33,13 @@ const renderGoogleInput = ({input: {value, onChange}}) => <GooglePlaceInput defa
 
 
 
+
+@reduxForm({
+	form: 'locationInput'
+})
+@reduxFormValues({
+	form: 'locationInput'	
+})
 class LocationItemForm extends Component {
 	constructor(props) {
 		super(props);
@@ -63,6 +72,8 @@ class LocationItemForm extends Component {
 	}
 	render() {
 		console.log('this.props is ', this.props);
+		console.log(this.props.children,' children is');
+		const {children} = this.props
 
 		return (
 			<Content>
@@ -71,6 +82,9 @@ class LocationItemForm extends Component {
 				<Field name="icon" component={ Input } />
 				<Field name="meta" component={ this.renderMap } />
 				<Field name="meta" component={field => <Text>{field.input.value.description}</Text>} />
+				{
+					this.props.children
+				}
 			</Content>
 		);
 	}

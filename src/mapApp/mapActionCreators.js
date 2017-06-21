@@ -1,4 +1,5 @@
 import {convertArrayToMirrorAction,  createAsyncHttpAction, httpActionDispatcher} from '../lib/simpleReduxTool';
+import createUUID from '../lib/uuidTool';
 
 const syncActions = convertArrayToMirrorAction([
 	'ADD_ROUTE',
@@ -29,8 +30,17 @@ const fetchDirectionData = routeConfig => dispatch => {
 
 }
 
+const addRoute = route => ({
+	type: MapActions.ADD_ROUTE,
+	route: {
+		id: createUUID(),
+		...route
+	}
+});
+
 export {
 	MapActions,
-	fetchDirection
+	fetchDirection,
+	addRoute
 };
 

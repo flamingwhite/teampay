@@ -3,18 +3,17 @@ import { func, arrayOf, object } from 'prop-types';
 import { Container,  List } from 'native-base';
 import RouteListItem from './RouteListItem';
 
-const RouteList = ({ routeItems, onRouteClick }) => {
+const RouteList = ({ routes, onRouteClick }) => {
 	return (
 		<Container>
 			<List>
-				{routeItems.map(route =>
-					<RouteListItem key={route._id} routeItem={route}  onRouteClick={onRouteClick}/>)} </List>
+				{routes.map(route => <RouteListItem key={route.id} routeItem={route}  onRouteClick={onRouteClick}/>)}</List>
 		</Container>
 	);
 }
 
 RouteList.propTypes = {
-	routeItems: arrayOf(object),
+	routes: arrayOf(object),
 	onRouteClick: func,
 };
 

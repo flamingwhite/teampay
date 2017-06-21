@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EIcon from 'react-native-vector-icons/EvilIcons';
+import RouteListContainer from './containers/RouteListContainer';
 const myIcon = (<Icon name="rocket" size={30} color="#900" />)
 const eIcon = (<EIcon name="camera" size={80}   color="orange" />)
 
@@ -40,6 +41,7 @@ class MapMainScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.navigateToRouteInput = this.navigateToRouteInput.bind(this);
+		this.navigateToRouteEdit = this.navigateToRouteEdit.bind(this);
 
 	}
 	navigateToRouteInput() {
@@ -51,23 +53,26 @@ class MapMainScreen extends Component {
 		});
 	}
 
+	navigateToRouteEdit(route) {
+		console.log('route in callbackkkeeee', route);
+		let { navigator } = this.props;
+		navigator.push({
+			screen: 'routeEditScreen',
+			title: 'Edit ' + route.id,
+			animated: true,
+			passProps: {
+				route
+			}
+		})
+	}
+
 	render() {
 		const geocode = { latitude: 33.91, longitude: -84.458 };
 		return (
 			<Container>
 				<Content style={ styles.container }>
-					<MapView style={styles.map} initialRegion={{...geocode,  latitudeDelta: 0.3, longitudeDelta: 0.2, }}
-					style={{height: 350}}>
-						<MapView.Marker
-							title="this is title"
-							description="hello marker"
-							coordinate={{latitude: 33.91, longitude: -84.458}}
-						/>
-
-					</MapView>
+					<RouteListContainer onRouteClick={this.navigateToRouteEdit}></RouteListContainer>
 					<Text>Map up Map time is {this.props.time}</Text>
-					{myIcon}
-					{eIcon}
 					<Button onPress={ this.navigateToRouteInput }>
 						<Text>Add a Route</Text>
 					</Button>

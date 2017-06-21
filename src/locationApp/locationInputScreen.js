@@ -32,10 +32,11 @@ class LocationInputScreen extends Component {
 
 		return (
 			<Container>
-				<LocationItemForm/>
-				<Button success onPress={handleSubmit(this.createLocation)}>
-					<Text>Add a Location</Text>
-				</Button>
+				<LocationItemForm>
+					<Button success onPress={handleSubmit(this.createLocation)}>
+						<Text>Add a Location</Text>
+					</Button>
+				</LocationItemForm>
 			</Container>
 
 			);

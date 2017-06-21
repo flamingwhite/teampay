@@ -2,16 +2,25 @@ import React, { Component } from 'react';
 import { Picker, View, Text } from 'native-base';
 import { connect } from 'react-redux';
 import { visibileLocationSelector } from '../../locationApp/locationSelectors';
-import { Field } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { reduxFormValues } from '../../lib/reduxFormTool';
+import RouteTimePicker from './RouteTimePicker';
 
 
 
+const renderTimePicker = ({input: {onChange, value}}) => <RouteTimePicker onDateChange={ onChange } date={ value } />
 
 @connect(
 	state => ({
-		locations: visibileLocationSelector(state)
+		locations: visibileLocationSelector(state),
 	})
 )
+@reduxForm({
+	form: 'routeInput'
+})
+@reduxFormValues({
+	form: 'routeInput'
+})
 class RouteItemForm extends Component {
 	constructor(props) {
 		super(props);
@@ -33,10 +42,20 @@ class RouteItemForm extends Component {
 
 	}
 	render() {
+		console.log(this.props, 'does it has valuess');
+		console.log(this.props.formValues, 'does it has valuess');
 		return (
 			<View>
 				<Field name="formLocationId" component={ v => this.renderLocationPicker(v, 'Select a Start Location') } />
 				<Field name="toLocationId" component={ v => this.renderLocationPicker(v, 'Select a Destination') } />
+				<Field name="startTime" component={ renderTimePicker } />
+				<Field name="endTime" component={ renderTimePicker } />
+				<Text>
+					{JSON.stringify(this.props.formValues)}
+				</Text>
+				{
+					this.props.children
+				}
 			</View>
 			);
 	}
@@ -44,15 +63,3 @@ class RouteItemForm extends Component {
 }
 
 export default RouteItemForm;
-
-//     <Picker
-//         supportedOrientations={['portrait','landscape']}
-//         iosHeader="Select one"
-//         mode="dropdown"
-//         selectedValue={this.state.selected1}
-//         onValueChange={this.onValueChange.bind(this)}>
-//         <Item label="Wallet" value="key0" />
-//         <Item label="ATM Card" value="key1" />
-//         <Item label="Credit Card" value="key2" />
-//         <Item label="Debit Card" value="key3" />
-//    </Picker>

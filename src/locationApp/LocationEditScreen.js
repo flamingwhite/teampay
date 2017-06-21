@@ -13,19 +13,18 @@ import LocationItemForm from './components/LocationItemForm';
 	})
 )
 @reduxForm({
-	form: 'locationInput'
-})
+	form: 'locationInput'	
+})	
 class LocationEditScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.save = this.save.bind(this);
 		const { dispatch, location } = this.props;
-		console.log('initialValue === ', location);
-		dispatch(initialize('locationInput', location))
 		this.deleteLocation = this.deleteLocation.bind(this);
 
 	}
 	save(values) {
+		console.log('save get callee');
 		const {dispatch, navigator} = this.props;
 		dispatch(updateLocation(values.id, values));
 		navigator.pop();
@@ -36,18 +35,17 @@ class LocationEditScreen extends Component {
 		navigator.pop();
 	}
 	render() {
-
-		const {handleSubmit} = this.props;
-
+		const { handleSubmit } = this.props;
 		return (
 			<Container>
-				<LocationItemForm {...this.props}/>
-				<Button onPress={handleSubmit(this.save)}>
-					<Text>Edit Location</Text>
-				</Button>
+				<LocationItemForm initialValues={this.props.location}>
+					<Button onPress={handleSubmit(this.save)}>
+						<Text>Edit Location</Text>
+					</Button>
 				<Button danger onPress={this.deleteLocation}>
 					<Text>Delete Location</Text>
 				</Button>
+			</LocationItemForm>	
 			</Container>
 
 			);
