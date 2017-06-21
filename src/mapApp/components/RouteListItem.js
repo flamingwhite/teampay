@@ -11,7 +11,7 @@ const RouteListItem = ({routeItem, onRouteClick}) => {
 			</Left>
 			<Body>
 				<Text style={ { height: 40 } }>
-					{ JSON.stringify(routeItem) }
+					{routeItem.fromLocation.alias} => {routeItem.toLocation.alias}
 				</Text>
 			</Body>
 			<Right>

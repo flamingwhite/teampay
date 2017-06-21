@@ -46,7 +46,7 @@ class RouteItemForm extends Component {
 		console.log(this.props.formValues, 'does it has valuess');
 		return (
 			<View>
-				<Field name="formLocationId" component={ v => this.renderLocationPicker(v, 'Select a Start Location') } />
+				<Field name="fromLocationId" component={ v => this.renderLocationPicker(v, 'Select a Start Location') } />
 				<Field name="toLocationId" component={ v => this.renderLocationPicker(v, 'Select a Destination') } />
 				<Field name="startTime" component={ renderTimePicker } />
 				<Field name="endTime" component={ renderTimePicker } />

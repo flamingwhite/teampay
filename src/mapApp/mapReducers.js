@@ -15,16 +15,24 @@ const mapHandlers = {
 		routes: state.routes.concat(action.route)
 	}),
 	[MapActions.FETCH_DIRECTION_DATA_SUCCESS]: (state, action) => {
-		const timeObj = extractFromDirectionData(action.data);
+		const data = action.data;
 		return {
 			...state,
-			...timeObj
+			trafficData: {
+				...state.trafficData,
+				[data.routeId]: (state.trafficData[data.routeId] || []).concat(data)
+			}
 		};
-	}
+	},
+	[MapActions.DELETE_ROUTE]: (state, { routeId }) => ({
+		...state,
+		routes: state.routes.filter(r => r.id !== routeId)
+	})
 };
 
 const MapReducer = createReducer(mapHandlers, {
-	routes: []
+	routes: [],
+	trafficData: {}
 });
 
 

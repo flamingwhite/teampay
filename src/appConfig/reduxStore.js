@@ -1,6 +1,5 @@
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import syncStoreToAsyncStorage from './reduxMiddlewares/syncStoreToAsyncStorage';
 import {AsyncStorage} from 'react-native';
 import {
 	createStore,
@@ -9,6 +8,8 @@ import {
 } from 'redux';
 import rootReducer from './rootReducer';
 import { persistStore, autoRehydrate } from 'redux-persist';
+import {fetchTrafficData} from '../mapApp/mapActionCreators.js'
+import {activeRouteSelector} from '../mapApp/mapSelectors';
 
 // let emptyState = {
 // 	todoChunk: {
@@ -23,6 +24,8 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 // 		newRouteForm: {}
 // 	}
 // };
+
+console.disableYellowBox = true;
 
 
 function configStore(initState) {
@@ -39,20 +42,14 @@ persistStore(store, {
 	storage: AsyncStorage
 });
 
-// AsyncStorage.getItem('reduxStore')
-// 	.then(data => {
-// 		console.log('STORE GET FROM ASYNCSTORE', data);
-// 		let newStore = JSON.parse(data);
-// 		if (!data) {
-// 			newStore = emptyState;
-// 			console.warn('async store is null, use empty store');
-// 		}
-// 		store.dispatch({
-// 			type: 'ASYNC_STORE',
-// 			store: newStore
-// 		});
-// 	})
 
+// setInterval(() => {
+// 	let state = store.getState();
+// 	let route = activeRouteSelector(state)[1]
+// 	if(route)
+// 	store.dispatch(fetchTrafficData(route));
+	
 
+// }, 20000);
 
 export default store;

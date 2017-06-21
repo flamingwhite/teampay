@@ -41,7 +41,7 @@ class MapMainScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.navigateToRouteInput = this.navigateToRouteInput.bind(this);
-		this.navigateToRouteEdit = this.navigateToRouteEdit.bind(this);
+		this.navigateToTrafficSummary = this.navigateToTrafficSummary.bind(this);
 
 	}
 	navigateToRouteInput() {
@@ -53,12 +53,14 @@ class MapMainScreen extends Component {
 		});
 	}
 
-	navigateToRouteEdit(route) {
+	
+
+	navigateToTrafficSummary(route) {
 		console.log('route in callbackkkeeee', route);
 		let { navigator } = this.props;
 		navigator.push({
-			screen: 'routeEditScreen',
-			title: 'Edit ' + route.id,
+			screen: 'routeTrafficSummaryScreen',
+			title: 'summary ' + route.id,
 			animated: true,
 			passProps: {
 				route
@@ -71,7 +73,7 @@ class MapMainScreen extends Component {
 		return (
 			<Container>
 				<Content style={ styles.container }>
-					<RouteListContainer onRouteClick={this.navigateToRouteEdit}></RouteListContainer>
+					<RouteListContainer onRouteClick={this.navigateToTrafficSummary}></RouteListContainer>
 					<Text>Map up Map time is {this.props.time}</Text>
 					<Button onPress={ this.navigateToRouteInput }>
 						<Text>Add a Route</Text>
