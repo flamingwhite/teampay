@@ -49,8 +49,9 @@ class MapMainScreen extends Component {
 		this.navigateToRouteInput = this.navigateToRouteInput.bind(this);
 		this.navigateToTrafficSummary = this.navigateToTrafficSummary.bind(this);
 		console.log('pppppmap', this.props);
-		this.props.navClickSub.subscribe(a => {
-			console.log('subm sub', a);
+		this.props.rightClick.subscribe(a => {
+			console.log('subm sub rightclik', a);
+			this.navigateToRouteInput();
 		})
 
 	}
@@ -85,18 +86,9 @@ class MapMainScreen extends Component {
 		};
 		return (
 			<Container>
-				<Grid>
-					<Row size={ 6 }>
-						<Content>
-							<RouteListContainer onRouteClick={ this.navigateToTrafficSummary }></RouteListContainer>
-						</Content>
-					</Row>
-					<Row size={1} style={{}}>
-						<Button onPress={ this.navigateToRouteInput }>
-							<Text>Add a Route</Text>
-						</Button>
-					</Row>
-				</Grid>
+				<Content>
+					<RouteListContainer onRouteClick={ this.navigateToTrafficSummary }></RouteListContainer>
+				</Content>
 			</Container>
 			);
 	}

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { AlertIOS } from 'react-native';
-// import {Observable} from 'rxjs/Observable';
 import Rx from 'rxjs/Rx'
+import PropTypes from 'prop-types';
 
-console.log('RXXXX', Rx);
 
-
-const navbarButton = config => InnerCmp => {
+const navbarButton = (...config) => InnerCmp => {
+	let [right, left] = config;
 	let defaultConfig = {
 		title: 'Edit',
 		id: 'edit',
@@ -14,36 +12,52 @@ const navbarButton = config => InnerCmp => {
 		buttonFontSize: 16,
 	}
 
-	let buttonConfig = {
+	let leftConfig, rightConfig;
+
+	rightConfig = {
 		...defaultConfig,
-		...config
+		...right
 	};
+
+	let navButtons = {
+		rightButtons: [rightConfig]
+	};
+
+	if(left) { 
+		leftConfig = {
+			...defaultConfig,
+			...left
+		};
+		navButtons.leftButtons = [leftConfig];
+	}
+
 
 
 	class Wrapper extends Component {
-		static navigatorButtons = {
-			rightButtons: [buttonConfig]
-		};
+		static navigatorButtons = navButtons;
 		constructor(props) {
 			super(props);
 			console.log('bar wrapper con');
 
-			this.navClickSub = new Rx.Subject();
+			this.navigationEvents = new Rx.Subject();
+			this.leftClick = this.navigationEvents.filter(e => e.id == (leftConfig || {}).id)
+			this.rightClick = this.navigationEvents.filter(e => e.id == (rightConfig || {}).id)
 
-			this.onNavigatorEvent = this.onNavigatorEvent.bind(this);
 			this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 		}
 		onNavigatorEvent(event) {
 			console.log('icon pressed', event);
-			if (event.type == 'NavBarButtonPress' && event.id == buttonConfig.id) {
-				this.navClickSub.next(event);
-			}
+			this.navigationEvents.next(event);
 		}
 		render() {
 			return (
-				<InnerCmp navClickSub={this.navClickSub} { ...this.props } />
+				<InnerCmp navigationEvents={this.navigationEvents} { ...this.props } leftClick={this.leftClick} rightClick={this.rightClick}/>
 				);
 		}
+	}
+
+	Wrapper.propTypes = {
+		navigator: PropTypes.object
 	}
 
 	return Wrapper;
