@@ -1,15 +1,14 @@
-import React  from 'react';
+import React from 'react';
 import { func, arrayOf, object } from 'prop-types';
-import { Container,  List } from 'native-base';
+import { Container, List } from 'native-base';
 import RouteListItem from './RouteListItem';
 
-const RouteList = ({ routes, onRouteClick }) => {
+const RouteList = ({routes, onRouteClick}) => {
 	return (
-		<Container>
-			<List>
-				{routes.map(route => <RouteListItem key={route.id} routeItem={route}  onRouteClick={onRouteClick}/>)}</List>
-		</Container>
-	);
+		<List>
+			{ routes.map(route => <RouteListItem key={ route.id } routeItem={ route } onRouteClick={ onRouteClick } />) }
+		</List>
+		);
 }
 
 RouteList.propTypes = {

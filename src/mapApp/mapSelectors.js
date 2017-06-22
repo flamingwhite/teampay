@@ -1,4 +1,5 @@
 import {createSelector} from 'reselect';
+import RichArray from '../lib/richArray'
 
 const activeRouteSelector = createSelector(
 	state => state.mapChunk.routes,
@@ -13,7 +14,7 @@ const activeRouteSelector = createSelector(
 const routeTrafficDataSelector = createSelector(
 	state => state.mapChunk.trafficData,
 	(state, props) => props.route,
-	(trafficData, route) => trafficData[route.id]
+	(trafficData, route) => RichArray(trafficData[route.id])
 );
 
 export { activeRouteSelector, routeTrafficDataSelector };
