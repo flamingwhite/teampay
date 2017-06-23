@@ -51,7 +51,7 @@ const navbarButton = (...config) => InnerCmp => {
 		}
 		render() {
 			return (
-				<InnerCmp navigationEvents={this.navigationEvents} { ...this.props } leftClick={this.leftClick} rightClick={this.rightClick}/>
+				<InnerCmp navigator={this.props.navigator} navigationEvents={this.navigationEvents} { ...this.props } leftClick={this.leftClick} rightClick={this.rightClick}/>
 				);
 		}
 	}

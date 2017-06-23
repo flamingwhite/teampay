@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Text, Content, Button } from 'native-base';
-import { StyleSheet, View } from 'react-native';
+import { Container, Text, Content, Button, ListItem } from 'native-base';
+import { StyleSheet, View, LayoutAnimation } from 'react-native';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,6 +9,8 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import navbarButton from '../decorators/navbarButton';
+import AddressPicker from '../genericCmps/AddressPicker';
+import controlNavTabs from '../decorators/controlNavTab';
 
 
 console.log(MapView);
@@ -33,6 +35,7 @@ const styles = StyleSheet.create({
 	},
 });
 
+@controlNavTabs()
 @navbarButton({
 	id: 'addRoute',
 	title: 'Add'
@@ -53,6 +56,13 @@ class MapMainScreen extends Component {
 			console.log('subm sub rightclik', a);
 			this.navigateToRouteInput();
 		})
+
+		this.state = {
+			nodes: [1, 2, 3],
+			width:20
+		}
+		this.addNode=this.addNode.bind(this)
+		this.s = 'hidden'
 
 	}
 	navigateToRouteInput() {
@@ -79,15 +89,41 @@ class MapMainScreen extends Component {
 		})
 	}
 
+	addNode() {
+		this.setState({
+			nodes: this.state.nodes.concat(4),
+			width: this.state.width+20
+		});
+		
+
+		this.props.navigator.toggleTabs({
+			to: this.s,
+			animated: true
+		})
+		this.props.navigator.toggleNavBar({
+			to: this.s,
+			animated: true
+		})
+		this.s = this.s == 'hidden'?'shown':'hidden';
+	}
+
 	render() {
+		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
 		const geocode = {
 			latitude: 33.91,
 			longitude: -84.458
 		};
+		const {toggleNavTabs, toggleNavBar} = this.props;
 		return (
-			<Container>
+			
+			<Container style={{backgroundColor:'gray'}}>
+					<Button onPress={this.addNode} style={{position:'absolute',right:0,bottom:0}}><Text>Add</Text></Button>
 				<Content>
 					<RouteListContainer onRouteClick={ this.navigateToTrafficSummary }></RouteListContainer>
+					<AddressPicker onFullMode={()=>toggleNavBar(false)} onNormalMode={()=>toggleNavBar(true)}></AddressPicker>
+					{
+						this.state.nodes.map(n => <Text style={{backgroundColor:'green', width:this.state.width}}>{n}</Text>)
+					}
 				</Content>
 			</Container>
 			);

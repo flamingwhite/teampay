@@ -53,10 +53,14 @@
 <key>NSPhotoLibraryUsageDescription</key>
 <string>Your message to user when the photo library is accessed for the first time</string>
 
-<!-- Include this only if you are planning to use the microphone for video recording -->
+<!--GPS Locations-->
+<key>NSLocationWhenInUseUsageDescriptionn</key>
+<string>Your message to user when the microsphone is accessed for the first time</string>
+<key>NSLocationAlwaysUsageDescriptionn</key>
+<string>Your message to user when the photo library is accessed for the first time</string>
+
 <key>NSMicrophoneUsageDescription</key>
 <string>Your message to user when the microsphone is accessed for the first time</string>
-
 
     <key>UIAppFonts</key>
     <array>
