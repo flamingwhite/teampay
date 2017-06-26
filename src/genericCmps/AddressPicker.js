@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Input,Text, Button,Content, Left, Body,Right, Item, Icon } from 'native-base';
-import {StyleSheet, View, LayoutAnimation} from 'react-native';
-import Modal from 'react-native-modal';
+import { Input, Text, Button, Content, Left, Body, Right, Item, Icon } from 'native-base';
+import { StyleSheet, View, LayoutAnimation, TouchableHighlight } from 'react-native';
+import GooglePlaceInput from './GooglePlaceInput';
+import Modal from 'react-native-modalbox';
+import EvIcon from 'react-native-vector-icons/EvilIcons';
 
 const styles = StyleSheet.create({
 	full: {
@@ -14,7 +16,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'yellow'
 	},
 	normal: {
-		backgroundColor:'lightgray'
+		backgroundColor: 'lightgray'
 	},
 	absoluteInput: {
 		height: 30,
@@ -23,46 +25,56 @@ const styles = StyleSheet.create({
 
 });
 
-class AddressPicker extends Component{
+class AddressPicker extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			fullMode: false
 		}
 		this.toggleFullMode = this.toggleFullMode.bind(this);
-		
+		this.showModal = this.showModal.bind(this);
+		this.hideModal = this.hideModal.bind(this);
+		this.onAddressSelect = this.onAddressSelect.bind(this);
 	}
+
 	toggleFullMode(mode) {
-		const { onFullMode, onNormalMode} = this.props;
-		console.log('toggle to ', mode);
-		this.setState({ fullMode: mode});
-		if (mode) onFullMode();
-		else onNormalMode();
+		this.setState({
+			fullMode: mode
+		});
+	}
+
+	showModal() {
+		this.toggleFullMode(true);
+	}
+	hideModal() {
+		this.toggleFullMode(false);
+	}
+	onAddressSelect() {
 
 	}
+
+
 
 	render() {
 		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-		const { fullMode } = this.state;
-		return(
-			<View style={fullMode? styles.full: styles.normal}>
-				<Input placeholder="ABC" onFocus={() => this.toggleFullMode(true)} ></Input>
+		const {fullMode} = this.state;
+		const { showModal, hideModal } = this;
+		return (
+			<View>
+				<Input placeholder="ABC" onFocus={showModal}></Input>
 				<Input placeholder="DDD"></Input>
-				<Modal isVisible={this.state.fullMode} style={{ backgroundColor: 'white', justifyContent:'flex-start'}}>
-					<View style={{height:70}}>
+				<Modal isOpens={fullMode} style={{ backgroundColor: 'white', justifyContent: 'flex-start' }}>
+					<View>
 						<Item>
-							<Icon active name="home"></Icon>
-							<Input  placeholder="Address"></Input>
-						</Item>					
+							<TouchableHighlight onPress={hideModal} style={{paddingLeft:10}}>
+								<Icon name="arrow-back" fontSize={ 35 }></Icon>
+							</TouchableHighlight>
+						</Item>
 					</View>
-						<Content>
-						<Button onPress={() => this.toggleFullMode(false)}><Text>Back</Text></Button>
-						<Button><Text>Hello</Text></Button>
-					</Content>
 				</Modal>
 			</View>
-			
-		);
+
+			);
 	}
 }
 

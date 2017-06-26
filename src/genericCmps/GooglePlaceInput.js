@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Text, Content } from 'native-base';
+import { Container, Text, Content, Icon } from 'native-base';
 import { StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
@@ -43,7 +43,23 @@ const GooglePlaceInput = props => {
 			getDefaultValue={() => defaultValue}
 			predefinedPlaces={defaultLocations}
 			debounce={200}
-			renderRightButton={() => <Text>Right></Text>}
+			styles={{
+				textInputContainer: {
+				backgroundColor: 'rgba(0,0,0,0)',
+				borderTopWidth: 0,
+				borderBottomWidth:0
+			},
+			textInput: {
+				marginLeft: 0,
+				marginRight: 0,
+				height: 38,
+				color: '#5d5d5d',
+				fontSize: 16
+			},
+			predefinedPlacesDescription: {
+				color: '#1faadb'
+			},
+			}}
 			{...rest}
 
 		/>
