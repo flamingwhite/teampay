@@ -29,7 +29,7 @@ class AddressPicker extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: false
+			data: 'DDD'
 		}
 
 		let { addressStream, onAddressSelect } = this.props;

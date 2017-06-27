@@ -5,27 +5,25 @@ import MapView from 'react-native-maps';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import { googlePlaceDetail } from '../lib/googleAPIs';
 
-const homePlace = {description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
-const workPlace = {description: 'Work', geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }};
-
 const GooglePlaceInput = props => {
 	const { onSelect, defaultLocations, defaultValue='', ...rest } = props;
 
 	console.log('input, ', props);
 
-	const onUserPick = data => {
-		let { place_id: placeId } = data;
-		return googlePlaceDetail(placeId).then(detail => {
-			console.log('detail', detail);
-			onSelect({
-				...data,
-				...detail,
-				latlng: {
-					latitude:detail.geometry.location.lat,
-					longitude: detail.geometry.location.lng
-				}
-			})
-		})
+	const onUserPick = async data => {
+
+		let { place_id: placeId, description } = data;
+		let detail = await googlePlaceDetail(placeId);
+		// let { formatted_address: title } = detail;
+		// let { location } = detail.geometry;
+		// let geocode = {
+		// 	latitude: location.lat,
+		// 	longitude: location.lng
+		// };
+
+		console.log('detail is ', detail);
+		onSelect(detail);
+
 	}
 
 	return (
