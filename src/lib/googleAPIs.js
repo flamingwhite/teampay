@@ -15,6 +15,12 @@ const createGoogleReverseGeocoingUrl = (latitude, longitude) => {
 	return url;
 }
 
+const createGoogleAutoCompleteUrl = input => {
+	let url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?&input=${encodeURI(input)}&key=${apiKey}`;
+	console.log('autocomplete url', url);
+	return url;
+};
+
 const googlePlaceDetail = placeId =>
 	fetch(createGooglePlaceUrl(placeId))
 	.then(r => r.json())
@@ -90,8 +96,20 @@ const getCurrentLocation = () => {
 }
 
 
+const placeAutocompleteSearch = input =>
+	fetch(createGoogleAutoCompleteUrl(input))
+	.then(r => r.json())
+	.then(data => {
+		let { predictions } = data;
+		return predictions.slice(0, 4).map(place => ({
+			description: place.description,
+			placeId: place.place_id
+		}));
+	})
+
 export {
 	googlePlaceDetail,
 	reverseGeocoding,
-	getCurrentLocation
+	getCurrentLocation,
+	placeAutocompleteSearch
 };
