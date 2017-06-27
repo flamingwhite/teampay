@@ -62,6 +62,7 @@ class MapMainScreen extends Component {
 			width:20
 		}
 		this.addNode=this.addNode.bind(this)
+		this.onAddressSelect = this.onAddressSelect.bind(this);
 		this.s = 'hidden'
 
 	}
@@ -96,27 +97,22 @@ class MapMainScreen extends Component {
 			width: this.state.width+20
 		});
 		
-
-		// this.props.navigator.toggleTabs({
-		// 	to: this.s,
-		// 	animated: true
-		// })
-		// this.props.navigator.toggleNavBar({
-		// 	to: this.s,
-		// 	animated: true
-		// })
 		this.s = this.s == 'hidden'?'shown':'hidden';
+	}
+	onAddressSelect(addr) {
+		console.log('map main address select', addr);
 	}
 
 	render() {
-		LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-
+		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+		let { onAddressSelect } = this;
+		
 		return (
 			<Container style={{backgroundColor:'gray'}}>
 				<Content>
 					<Button onPress={this.addNode} style={{position:'absolute',right:0,bottom:0}}><Text>Add</Text></Button>
 					<RouteListContainer onRouteClick={ this.navigateToTrafficSummary }></RouteListContainer>
-					<AddressPicker></AddressPicker>
+					<AddressPicker onAddressSelect={onAddressSelect}></AddressPicker>
 					{
 						this.state.nodes.map(n => <Text style={{backgroundColor:'green', width:this.state.width}}>{n}</Text>)
 					}

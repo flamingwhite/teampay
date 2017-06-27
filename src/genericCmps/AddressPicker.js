@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Input, Text, Button, Content, Left, Body, Right, Item, Icon } from 'native-base';
 import { StyleSheet, View, LayoutAnimation, TouchableHighlight } from 'react-native';
 import GooglePlaceInput from './GooglePlaceInput';
-import Modal from 'react-native-modalbox';
-import EvIcon from 'react-native-vector-icons/EvilIcons';
+import addressPickerDecorator from '../decorators/addressPickerDecorator';
 
 const styles = StyleSheet.create({
 	full: {
@@ -25,57 +24,32 @@ const styles = StyleSheet.create({
 
 });
 
+@addressPickerDecorator()
 class AddressPicker extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fullMode: false
+			data: false
 		}
-		this.toggleFullMode = this.toggleFullMode.bind(this);
-		this.showModal = this.showModal.bind(this);
-		this.hideModal = this.hideModal.bind(this);
-		this.onAddressSelect = this.onAddressSelect.bind(this);
-	}
 
-	toggleFullMode(mode) {
-		this.setState({
-			fullMode: mode
+		let { addressStream, onAddressSelect } = this.props;
+
+		this.props.addressStream.subscribe(d => {
+			this.setState({data: d})
+			console.log('from address stream', d)
+			onAddressSelect(d);
 		});
 	}
 
-	showModal() {
-		this.toggleFullMode(true);
-	}
-	hideModal() {
-		this.toggleFullMode(false);
-	}
-	onAddressSelect() {
-
-	}
-
-
 
 	render() {
-		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-		const {fullMode} = this.state;
-		const { showModal, hideModal } = this;
+		let { openPicker } = this.props;
+		let { data } = this.state;
 		return (
-			<View>
-				<Input placeholder="ABC" onFocus={showModal}></Input>
-				<Input placeholder="DDD"></Input>
-				<Modal isOpens={fullMode} style={{ backgroundColor: 'white', justifyContent: 'flex-start' }}>
-					<View>
-						<Item>
-							<TouchableHighlight onPress={hideModal} style={{paddingLeft:10}}>
-								<Icon name="arrow-back" fontSize={ 35 }></Icon>
-							</TouchableHighlight>
-						</Item>
-					</View>
-				</Modal>
-			</View>
-
-			);
+			<Input value={data} placeholder="ABC" onFocus={openPicker}></Input>
+		);
 	}
+
 }
 
 
