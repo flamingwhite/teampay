@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+	Component
+} from 'react';
 import Rx from 'rxjs/Rx'
 import PropTypes from 'prop-types';
 
@@ -12,18 +14,21 @@ const navbarButton = (...config) => InnerCmp => {
 		buttonFontSize: 16,
 	}
 
-	let leftConfig, rightConfig;
+	let leftConfig, rightConfig, navButtons = {};
 
-	rightConfig = {
-		...defaultConfig,
-		...right
-	};
+	if (right) {
+		rightConfig = {
+			...defaultConfig,
+			...right
+		};
 
-	let navButtons = {
-		rightButtons: [rightConfig]
-	};
+		navButtons = {
+			rightButtons: [rightConfig]
+		};
+	}
 
-	if(left) { 
+
+	if (left) {
 		leftConfig = {
 			...defaultConfig,
 			...left
@@ -50,9 +55,22 @@ const navbarButton = (...config) => InnerCmp => {
 			this.navigationEvents.next(event);
 		}
 		render() {
-			return (
-				<InnerCmp navigator={this.props.navigator} navigationEvents={this.navigationEvents} { ...this.props } leftClick={this.leftClick} rightClick={this.rightClick}/>
-				);
+			return ( <
+				InnerCmp navigator = {
+					this.props.navigator
+				}
+				navigationEvents = {
+					this.navigationEvents
+				} { ...this.props
+				}
+				leftClick = {
+					this.leftClick
+				}
+				rightClick = {
+					this.rightClick
+				}
+				/>
+			);
 		}
 	}
 

@@ -29,14 +29,21 @@ class AddressPicker extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: 'DDD'
+			value: 'DDD',
 		}
 
+		let { initValue } = props;
+
 		let { addressStream, onAddressSelect } = this.props;
+		this.state = {
+			address: initValue,
+			text: initValue? initValue.title: ''
+		}
 
 		this.props.addressStream.subscribe(d => {
 			this.setState({
-				data: d.description.slice(0, d.description.lastIndexOf(','))
+				address: d,
+				text: d.title
 			})
 			console.log('from address stream', d)
 			onAddressSelect(d);
@@ -46,9 +53,9 @@ class AddressPicker extends Component {
 
 	render() {
 		let { openPicker } = this.props;
-		let { data } = this.state;
+		let { text } = this.state;
 		return (
-			<Input value={data} placeholder="ABC" onFocus={openPicker}></Input>
+			<Input value={text} placeholder="ABC" onFocus={openPicker}></Input>
 		);
 	}
 

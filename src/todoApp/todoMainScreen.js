@@ -10,6 +10,7 @@ import FooterFilterLink from './components/TodoFilterTab';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import CameraTest from './components/CameraTest';
 import { appStateChange } from '../appState/appStateActionCreator';
+import navbarButtons from '../decorators/navbarButton'
 
 
 
@@ -51,6 +52,9 @@ PushNotification.configure({
 });
 
 
+@navbarButtons({
+	title: 'Add'
+})
 @connect( state => ({ todos: state.todoChunk.todos }))
 class TodoApp extends Component {
 

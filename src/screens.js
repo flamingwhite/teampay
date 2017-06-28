@@ -12,6 +12,7 @@ import RouteTrafficSummaryScreen from './mapApp/RouteTrafficSummaryScreen';
 import LocationMainScreen from './locationApp/LocationMainScreen';
 import LocationInputScreen from './locationApp/LocationInputScreen';
 import LocationEditScreen from './locationApp/LocationEditScreen';
+import AddressPickScreen from './addressApp/AddressPickScreen';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
@@ -25,4 +26,5 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('locationMainScreen', () => LocationMainScreen, store, Provider);
 	Navigation.registerComponent('locationInputScreen', () => LocationInputScreen, store, Provider);
 	Navigation.registerComponent('locationEditScreen', () => LocationEditScreen, store, Provider);
+	Navigation.registerComponent('addressPickScreen', () => AddressPickScreen, store, Provider);
 }

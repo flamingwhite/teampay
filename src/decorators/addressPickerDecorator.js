@@ -5,21 +5,17 @@ import { Input, Text, Button, Content, Left, Body, Right, Item, Icon, ListItem, 
 import { StyleSheet, TextInput, View, LayoutAnimation, TouchableHighlight, Keyboard, ScrollView } from 'react-native';
 import Rx from 'rxjs/Rx';
 import {connect} from 'react-redux';
-import GooglePlaceInput from '../genericCmps/GooglePlaceInput';
 import {addAddressHistory} from '../addressApp/addressActionCreator';
 import {recentAddressSelector} from '../addressApp/addressSelectors';
-import {getCurrentLocation, placeAutocompleteSearch} from '../lib/googleAPIs';
+import {getCurrentLocation, placeAutocompleteSearch, googlePlaceDetail} from '../lib/googleAPIs';
 import { clearAddressHistory } from '../addressApp/addressActionCreator';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 import AddressList from '../addressApp/components/AddressList';
 
 const addressPickerDecorator = config => InnerCmp => {
 
-
-
 	@connect(
-		state => (({
-			recentAddrs: recentAddressSelector(state)
+		(state, props) => (({
+			recentAddrs: recentAddressSelector(state, props)
 		}))
 	)
 	class Wrapper extends Component {
@@ -27,9 +23,12 @@ const addressPickerDecorator = config => InnerCmp => {
 			super(props);
 			this.state = {
 				isOpen: false,
-				searchValue: '',
-				suggestions: []
+				searchValue: props.initValue? props.initValue.title: '',
+				suggestions: [],
+				address: props.initValue || null
 			}
+
+			console.log('wrapper props', props);
 
 			this.openPicker = this.openPicker.bind(this);
 			this.close = this.close.bind(this);
@@ -55,6 +54,19 @@ const addressPickerDecorator = config => InnerCmp => {
 
 
 		}
+		componentWillReceiveProps(props) {
+			let { initValue } = props;
+			console.log('the initvalue in receive', initValue);
+
+			if (initValue) {
+				this.setState({
+					address: initValue,
+					searchValue: initValue.title
+				})
+			}
+
+		}
+
 		componentWillMount() {
 			getCurrentLocation().then(currentLocation => {
 				this.setState({
@@ -74,16 +86,26 @@ const addressPickerDecorator = config => InnerCmp => {
 			this.setState({
 				isOpen: false,
 				suggestions: [],
-				searchValue: ''
 			});
 		}
 
-		select(data) {
+		async select(data) {
 			Keyboard.dismiss();
 			let { addressStream,  close } = this;
-			addressStream.next(data);
-			this.props.dispatch((addAddressHistory(data)));
+			let detail = data;
+			if (!detail.geocode) {
+				detail = await googlePlaceDetail(data.placeId);
+			}
+			let newAddress = {
+				...data,
+				...detail
+			}
+			addressStream.next(newAddress);
 			close();
+			this.setState({
+				searchValue: newAddress.title
+			})
+			this.props.dispatch((addAddressHistory(newAddress)));
 		}
 		cancel() {
 			this.close();
@@ -126,14 +148,11 @@ const addressPickerDecorator = config => InnerCmp => {
 								list={recentAddrs}
 								onAddressPress={select}
 							/>
-							<Button onPress={ () => select('i am selected'+ new Date().toString()) }>
-								<Text>Waht is that</Text>
-							</Button>
 							<Button onPress={cancel}>
 								<Text>Cancel</Text>
 							</Button>
 							<Button danger onPress={() => this.props.dispatch(clearAddressHistory())}>
-								<Text>Cancel</Text>
+								<Text>Clear History</Text>
 							</Button>
 							<TextInput placeholder="abc" style={{height:40}}></TextInput>
 						</ScrollView>

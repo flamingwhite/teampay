@@ -11,6 +11,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import navbarButton from '../decorators/navbarButton';
 import AddressPicker from '../genericCmps/AddressPicker';
 import controlNavTabs from '../decorators/controlNavTab';
+import {Navigation} from 'react-native-navigation';
+import {showAddressPicker} from '../lib/addressPickService';
 
 
 console.log(MapView);
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-@controlNavTabs()
+// @controlNavTabs()
 @navbarButton({
 	id: 'addRoute',
 	title: 'Add'
@@ -63,7 +65,6 @@ class MapMainScreen extends Component {
 		}
 		this.addNode=this.addNode.bind(this)
 		this.onAddressSelect = this.onAddressSelect.bind(this);
-		this.s = 'hidden'
 
 	}
 	navigateToRouteInput() {
@@ -97,10 +98,18 @@ class MapMainScreen extends Component {
 			width: this.state.width+20
 		});
 		
-		this.s = this.s == 'hidden'?'shown':'hidden';
 	}
 	onAddressSelect(addr) {
 		console.log('map main address select', addr);
+		this.setState({
+			addr
+		})
+	}
+
+	pickAddr() {
+		showAddressPicker({}).then(d => {
+			console.log(d,'from promise');
+		})
 	}
 
 	render() {
@@ -108,11 +117,12 @@ class MapMainScreen extends Component {
 		let { onAddressSelect } = this;
 		
 		return (
-			<Container style={{backgroundColor:'gray'}}>
+			<Container>
 				<Content>
 					<Button onPress={this.addNode} style={{position:'absolute',right:0,bottom:0}}><Text>Add</Text></Button>
+					<Button onPress={this.pickAddr} ><Text>Pick</Text></Button>
 					<RouteListContainer onRouteClick={ this.navigateToTrafficSummary }></RouteListContainer>
-					<AddressPicker onAddressSelect={onAddressSelect}></AddressPicker>
+					<AddressPicker initValue={this.state.addr} onAddressSelect={onAddressSelect}></AddressPicker>
 					{
 						this.state.nodes.map(n => <Text style={{backgroundColor:'green', width:this.state.width}}>{n}</Text>)
 					}
