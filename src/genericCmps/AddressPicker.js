@@ -35,7 +35,9 @@ class AddressPicker extends Component {
 		let { addressStream, onAddressSelect } = this.props;
 
 		this.props.addressStream.subscribe(d => {
-			this.setState({data: d})
+			this.setState({
+				data: d.description.slice(0, d.description.lastIndexOf(','))
+			})
 			console.log('from address stream', d)
 			onAddressSelect(d);
 		});
