@@ -13,7 +13,7 @@ import AddressPicker from '../genericCmps/AddressPicker';
 import controlNavTabs from '../decorators/controlNavTab';
 import {Navigation} from 'react-native-navigation';
 import {showAddressPicker} from '../lib/addressPickService';
-import {addIcon} from '../icons';
+import {getIcon, addIcon} from '../icons';
 
 
 console.log(MapView);
@@ -38,11 +38,13 @@ const styles = StyleSheet.create({
 	},
 });
 
-// @controlNavTabs()
+// @controlNavTabs()j
 @navbarButton({
 	rightButtons: [{
 		id: 'addRoute',
-		icon: addIcon
+		get icon() {
+			return getIcon('ios-add')
+		}
 	}]
 })
 @connect(

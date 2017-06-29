@@ -1,28 +1,3 @@
-// import React, { Component } from 'react';
-// import { connect, Provider } from 'react-redux';
-
-// import store from './appConfig/reduxStore';
-// console.log('store', store);
-
-// import TodoApp from './todoApp';
-
-// import { StyleSheet, Text, View } from 'react-native';
-// import { Container } from 'native-base';
-
-
-// export default class App extends Component {
-// 	render() {
-// 		console.log('hello world app');
-// 		return (
-// 			<Provider store={ store }>
-// 				<Container style={{ flex: 1 }}>
-// 					<TodoApp/>
-// 				</Container>
-// 			</Provider>
-// 			);
-// 	}
-// }
-// ;
 
 
 import React, {
@@ -38,8 +13,8 @@ import {
 	registerScreens
 } from './screens';
 
+import {loadIcons, getIcon} from './icons';
 import Icon from 'react-native-vector-icons/Ionicons';
-
 import store from './appConfig/reduxStore';
 
 registerScreens(store, Provider);
@@ -53,63 +28,50 @@ const navigatorStyle = {
 	drawUnderTabBar: true
 };
 
-let settingsOutlineIcon, navigationOutline, homeIconOutline,
-	settingsIcon, navigationIcon, homeIcon;
 
-const populateIcons = function () {
-	return new Promise(function (resolve, reject) {
-		Promise.all(
-			[
-				Icon.getImageSource('ios-settings-outline', 30),
-				Icon.getImageSource('ios-navigate-outline', 30),
-				Icon.getImageSource('ios-home-outline', 30),
-				Icon.getImageSource('ios-settings', 30),
-				Icon.getImageSource('ios-navigate', 30),
-				Icon.getImageSource('ios-home', 30),
-				
-			]
-		).then((values) => {
-			[settingsOutlineIcon, navigationOutline, homeIconOutline, settingsIcon, navigationIcon, homeIcon] = values;
-			resolve(true);
-		}).catch((error) => {
-			console.log(error);
-			reject(error);
-		}).done();
-	});
-};
+function setup() {
+    var tasks = [
+        // other async tasks/promises
+		loadIcons([
+			'ios-settings-outline',
+			'ios-navigation-outline',
+			'ios-home-outline',
+			'ios-settings',
+			'ios-navigate',
+			'ios-home',
+			'ios-add',
+			'ios-arrow-back'
+		]),
+    ];
 
-const loadingIconAndStart = () => populateIcons().then(() => startApp());
+    Promise.all(tasks)
+        .then(() => new startApp());
+}
+
 
 const startApp = () => {
-	// Navigation.startSingleScreenApp({
-	// 	screen: {
-	// 		screen: 'todoScreen',
-	// 		title: 'Todo',
-	// 		navigatorStyle
-	// 	}
-	// });
 	Navigation.startTabBasedApp({
 		tabs: [
 			{
 				label: 'One', // tab label as appears under the icon in iOS (optional)
 				screen: 'todoMainScreen', // unique ID registered with Navigation.registerScreen
 				title: 'TODOScreen One', // title of the screen as appears in the nav bar (optional)
-				icon: homeIconOutline,
-				selectedIcon: homeIcon
+				icon: getIcon('ios-home-outline'),
+				selectedIcon: getIcon('ios-home')
 			},
 			{
 				label: 'MapDemp',
 				screen: 'mapMainScreen',
 				title: 'MapsToTest',
-				icon: navigationOutline,
-				selectIcon: navigationIcon
+				icon: getIcon('ios-navigate'),
+				selectIcon: getIcon('ios-navigate')
 			},
 			{
 				label: 'Locations',
 				screen: 'locationMainScreen',
 				title: 'My Locations',
-				icon: settingsOutlineIcon,
-				selectIcon: settingsIcon
+				icon: getIcon('ios-settings-outline'),
+				selectIcon: getIcon('ios-settings')
 			}
 		],
 		tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
@@ -137,4 +99,4 @@ const startApp = () => {
 
 }
 
-export default loadingIconAndStart;
+export default setup;

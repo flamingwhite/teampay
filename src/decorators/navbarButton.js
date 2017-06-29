@@ -3,10 +3,12 @@ import React, {
 } from 'react';
 import Rx from 'rxjs/Rx'
 import PropTypes from 'prop-types';
+import {getIcon} from '../icons';
 
 
 const navbarButton = buttonConfig => InnerCmp => {
 	
+	// buttonConfig.right.icon = getIcon(buttonConfig.right.icon)
 
 	class Wrapper extends Component {
 		static navigatorButtons = buttonConfig;

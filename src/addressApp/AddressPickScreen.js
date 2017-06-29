@@ -9,7 +9,7 @@ import { getCurrentLocation, placeAutocompleteSearch, googlePlaceDetail } from '
 import AddressList from '../addressApp/components/AddressList';
 import navbarButton from '../decorators/navbarButton';
 import MapView from 'react-native-maps';
-import {backIcon} from '../icons';
+import {getIcon} from '../icons';
 
 const styles = StyleSheet.create({
 	container: {
@@ -38,8 +38,10 @@ const getSearchInput = parts => {
 
 @navbarButton({
 	leftButtons: [{
-		icon: backIcon,
-		id: 'back'
+		id: 'back',
+		get icon() {
+			return getIcon('ios-arrow-back')
+		}
 	}]
 })
 @connect(

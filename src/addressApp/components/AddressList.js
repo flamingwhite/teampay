@@ -32,14 +32,14 @@ const lines = parts => {
 }
 
 const AddressList = props => {
-	const {list = [], icon='ios-pin', onAddressPress} = props;
+	const {list = [], icon='pin', onAddressPress} = props;
 
 	const renderRow = item => {
 		let { firstLine, secondLine } = lines(item.parts);
 		return (
 			<TouchableOpacity onPress={() => onAddressPress(item)}>
 				<CardItem >
-					<Icon name={icon} color="red"></Icon>
+					<Icon name={icon} backgroundColor="red"></Icon>
 					<Body>
 						<Text style={{fontSize: 14}}>{firstLine}</Text>
 						<Text style={{color:'gray', fontSize: 12}}>{secondLine}</Text>
