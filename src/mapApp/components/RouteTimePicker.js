@@ -36,6 +36,20 @@ const RouteTimePicker = ({ date, maxDate=null, onDateChange }) => (
 			mode="time"
 			placeholder="Select Time"
 			date={date}
+			showIcon={false}
+			customStyles={{
+				dateInput: {
+					borderWidth: 0,
+					borderBottomWidth:1,
+					width:500,
+					fontSize: 20
+				},
+				placeholderText: {
+				},
+				dateTouchBody: {
+					
+				}
+			}}
 			maxDate={maxDate}
 			format='h:mm a'
 			confirmBtnText="OK"
