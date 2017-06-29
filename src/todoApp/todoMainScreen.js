@@ -3,13 +3,14 @@ import { AppState } from 'react-native';
 import { object, arrayOf } from 'prop-types';
 import { connect } from 'react-redux';
 import TodoInput from './components/TodoInput';
-import { View,  Text,   Content, Footer } from 'native-base';
+import { View,  Text, Button,  Content, Footer } from 'native-base';
 import { addTodo, toggleTodo } from './todoService';
 import TodoListContainer from './components/TodoListContainer';
 import FooterFilterLink from './components/TodoFilterTab';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import CameraTest from './components/CameraTest';
 import { appStateChange } from '../appState/appStateActionCreator';
+import {AsyncStorage } from 'react-native';
 
 
 
@@ -94,6 +95,9 @@ class TodoApp extends Component {
 			<View style={ { flex: 1 } }>
 				<ScrollableTabView>
 					<Content tabLabel="hello">
+						<Button onPress={() => AsyncStorage.clear()}>
+							<Text>Clear Cache</Text>
+						</Button>
 						<TodoInput addTodo={ addTodo }></TodoInput>
 						<TodoListContainer style={{ flex: 1 }} todos={todos} toggleTodo={toggleTodo} onTodoClick={this.onTodoClick}></TodoListContainer>
 						<Text></Text>

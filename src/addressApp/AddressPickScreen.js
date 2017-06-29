@@ -29,6 +29,12 @@ const styles = StyleSheet.create({
 	},
 });
 
+const getSearchInput = parts => {
+	let { number = '', street = '', city, state } = parts;
+	if (street) return `${number} ${street}`;
+	return `${city}, ${state}`
+}
+
 @navbarButton(null, {
 	id: 'back',
 	title: 'Back'
@@ -43,7 +49,7 @@ class AddressPickScreen extends Component {
 		super(props);
 		this.state = {
 			isOpen: false,
-			searchValue: props.initValue ? props.initValue.title : '',
+			searchValue: props.initValue ? getSearchInput(props.initValue.parts) : '',
 			suggestions: [],
 			address: props.initValue || null
 		}
@@ -147,12 +153,15 @@ class AddressPickScreen extends Component {
 					<TextInput placeholder='Search' value={ searchValue } style={ { height: 40 } } onChangeText={ changeSearch }></TextInput>
 				</View>
 				<ScrollView keyboardShouldPersistTaps="always">
-					{ currentLocation &&
-						<Text>Current Location:
-							{ currentLocation.title }
-						</Text>
+					<AddressList list={ suggestions } onAddressPress={ select } />
+					{
+						currentLocation &&
+						<AddressList
+							icon='locate'
+							list={[currentLocation]}
+							onAddressPress={select}
+						/>
 					}
-					<AddressList list={ suggestions } onAddressPress={ select }></AddressList>
 					<AddressList list={ recentAddrs } onAddressPress={ select } />
 					{renderMap()}
 				</ScrollView>

@@ -5,7 +5,13 @@ import {StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 
 const styles = StyleSheet.create({
-
+	street: {
+		color:'red'
+	},
+	state: {
+		color: 'gray',
+		fontSize: 10
+	}
 
 });
 
@@ -13,7 +19,7 @@ const lines = parts => {
 	let { number = '', street = '', city, state, country } = parts;
 	let firstLine, secondLine;
 	if (street) {
-		firstLine = `${number}, ${street}`;
+		firstLine = `${number} ${street}`;
 		secondLine = `${city}, ${state}`;
 	} else {
 		firstLine = city;
@@ -26,17 +32,17 @@ const lines = parts => {
 }
 
 const AddressList = props => {
-	const {list = [], onAddressPress} = props;
+	const {list = [], icon='pin', onAddressPress} = props;
 
 	const renderRow = item => {
 		let { firstLine, secondLine } = lines(item.parts);
 		return (
 			<TouchableOpacity onPress={() => onAddressPress(item)}>
 				<CardItem >
-					<Icon name="pin"></Icon>
+					<Icon name={icon}></Icon>
 					<Body>
-						<Text>{firstLine}</Text>
-						<Text>{secondLine}</Text>
+						<Text style={{fontSize: 14}}>{firstLine}</Text>
+						<Text style={{color:'gray', fontSize: 12}}>{secondLine}</Text>
 					</Body>
 				</CardItem>
 			</TouchableOpacity>
