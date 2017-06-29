@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 const lines = parts => {
-	let { number = '', street = '', city, state, country } = parts;
+	let { number = '', street = '', city, state } = parts;
 	let firstLine, secondLine;
 	if (street) {
 		firstLine = `${number} ${street}`;
@@ -32,14 +32,14 @@ const lines = parts => {
 }
 
 const AddressList = props => {
-	const {list = [], icon='pin', onAddressPress} = props;
+	const {list = [], icon='ios-pin', onAddressPress} = props;
 
 	const renderRow = item => {
 		let { firstLine, secondLine } = lines(item.parts);
 		return (
 			<TouchableOpacity onPress={() => onAddressPress(item)}>
 				<CardItem >
-					<Icon name={icon}></Icon>
+					<Icon name={icon} color="red"></Icon>
 					<Body>
 						<Text style={{fontSize: 14}}>{firstLine}</Text>
 						<Text style={{color:'gray', fontSize: 12}}>{secondLine}</Text>

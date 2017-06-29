@@ -9,6 +9,7 @@ import { getCurrentLocation, placeAutocompleteSearch, googlePlaceDetail } from '
 import AddressList from '../addressApp/components/AddressList';
 import navbarButton from '../decorators/navbarButton';
 import MapView from 'react-native-maps';
+import {backIcon} from '../icons';
 
 const styles = StyleSheet.create({
 	container: {
@@ -35,9 +36,11 @@ const getSearchInput = parts => {
 	return `${city}, ${state}`
 }
 
-@navbarButton(null, {
-	id: 'back',
-	title: 'Back'
+@navbarButton({
+	leftButtons: [{
+		icon: backIcon,
+		id: 'back'
+	}]
 })
 @connect(
 	(state, props) => (({
@@ -55,8 +58,8 @@ class AddressPickScreen extends Component {
 		}
 
 		console.log('AddressPickScreen props', props);
-		let { onCancel, leftClick } = props;
-		leftClick.subscribe(onCancel);
+		let { onCancel, navButtonClick } = props;
+		navButtonClick('back').subscribe(onCancel);
 
 		this.select = this.select.bind(this);
 		this.changeSearch = this.changeSearch.bind(this);

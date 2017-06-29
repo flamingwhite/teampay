@@ -13,6 +13,7 @@ import AddressPicker from '../genericCmps/AddressPicker';
 import controlNavTabs from '../decorators/controlNavTab';
 import {Navigation} from 'react-native-navigation';
 import {showAddressPicker} from '../lib/addressPickService';
+import {addIcon} from '../icons';
 
 
 console.log(MapView);
@@ -39,8 +40,10 @@ const styles = StyleSheet.create({
 
 // @controlNavTabs()
 @navbarButton({
-	id: 'addRoute',
-	title: 'Add'
+	rightButtons: [{
+		id: 'addRoute',
+		icon: addIcon
+	}]
 })
 @connect(
 	state => ({
@@ -54,9 +57,11 @@ class MapMainScreen extends Component {
 		this.navigateToRouteInput = this.navigateToRouteInput.bind(this);
 		this.navigateToTrafficSummary = this.navigateToTrafficSummary.bind(this);
 		console.log('pppppmap', this.props);
-		this.props.rightClick.subscribe(a => {
+		
+		this.props.navButtonClick('addRoute').subscribe(a => {
 			console.log('subm sub rightclik', a);
 			this.navigateToRouteInput();
+
 		})
 
 		this.state = {
