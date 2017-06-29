@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
 	},
 });
 
-// @controlNavTabs()j
 @navbarButton({
 	rightButtons: [{
 		id: 'addRoute',

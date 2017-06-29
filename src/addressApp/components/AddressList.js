@@ -4,16 +4,16 @@ import { Card, CardItem, Icon, Text, Body } from 'native-base';
 import {StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 
-const styles = StyleSheet.create({
+const styles = {
 	street: {
-		color:'red'
+		fontSize: 13
 	},
 	state: {
 		color: 'gray',
-		fontSize: 10
+		fontSize: 12
 	}
 
-});
+};
 
 const lines = parts => {
 	let { number = '', street = '', city, state } = parts;
@@ -39,10 +39,10 @@ const AddressList = props => {
 		return (
 			<TouchableOpacity onPress={() => onAddressPress(item)}>
 				<CardItem >
-					<Icon name={icon} backgroundColor="red"></Icon>
+					<Icon name={icon} color="red"></Icon>
 					<Body>
-						<Text style={{fontSize: 14}}>{firstLine}</Text>
-						<Text style={{color:'gray', fontSize: 12}}>{secondLine}</Text>
+						<Text style={styles.street}>{firstLine}</Text>
+						<Text style={styles.state}>{secondLine}</Text>
 					</Body>
 				</CardItem>
 			</TouchableOpacity>

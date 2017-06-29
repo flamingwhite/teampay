@@ -1,8 +1,5 @@
 
 
-import React, {
-	Component
-} from 'react';
 import {
 	Navigation
 } from 'react-native-navigation';
@@ -14,7 +11,6 @@ import {
 } from './screens';
 
 import {loadIcons, getIcon} from './icons';
-import Icon from 'react-native-vector-icons/Ionicons';
 import store from './appConfig/reduxStore';
 
 registerScreens(store, Provider);
@@ -40,7 +36,8 @@ function setup() {
 			'ios-navigate',
 			'ios-home',
 			'ios-add',
-			'ios-arrow-back'
+			'ios-arrow-back',
+			'ios-close'
 		]),
     ];
 

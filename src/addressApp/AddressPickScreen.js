@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Text, StyleSheet, TextInput, View, LayoutAnimation, TouchableHighlight, Keyboard, ScrollView } from 'react-native';
+import {Item, Input, Icon} from 'native-base';
 import Rx from 'rxjs/Rx';
 import { connect } from 'react-redux';
 import { addAddressHistory } from '../addressApp/addressActionCreator';
@@ -10,17 +11,9 @@ import AddressList from '../addressApp/components/AddressList';
 import navbarButton from '../decorators/navbarButton';
 import MapView from 'react-native-maps';
 import {getIcon} from '../icons';
+import {shortTitleFromAddressParts} from '../lib/googleAPIs/addressUtil';
 
-const styles = StyleSheet.create({
-	container: {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		right: 0,
-		bottom: 0,
-		justifyContent: 'flex-end',
-		alignItems: 'center',
-	},
+const styles = {
 	map: {
 		position: 'absolute',
 		top: 0,
@@ -28,13 +21,15 @@ const styles = StyleSheet.create({
 		right: 0,
 		bottom: 0,
 	},
-});
-
-const getSearchInput = parts => {
-	let { number = '', street = '', city, state } = parts;
-	if (street) return `${number} ${street}`;
-	return `${city}, ${state}`
-}
+	searchItem: {
+		borderBottomWidth: 0	
+	},
+	searchInput: {
+		height: 38,
+		fontSize: 14,
+		borderBottomWidth:0
+	}
+};
 
 @navbarButton({
 	leftButtons: [{
@@ -54,7 +49,7 @@ class AddressPickScreen extends Component {
 		super(props);
 		this.state = {
 			isOpen: false,
-			searchValue: props.initValue ? getSearchInput(props.initValue.parts) : '',
+			searchValue: props.initValue ? shortTitleFromAddressParts(props.initValue.parts) : '',
 			suggestions: [],
 			address: props.initValue || null
 		}
@@ -155,7 +150,12 @@ class AddressPickScreen extends Component {
 		return (
 			<View>
 				<View>
-					<TextInput placeholder='Search' value={ searchValue } style={ { height: 40 } } onChangeText={ changeSearch }></TextInput>
+					<Item style={styles.searchItem}>
+						<Input placeholder="Search" value={searchValue} onChangeText={changeSearch} style={styles.searchInput}></Input>
+						<TouchableHighlight onPress={() => changeSearch('')}>
+							<Icon name="ios-close" active></Icon>
+						</TouchableHighlight>
+					</Item>
 				</View>
 				<ScrollView keyboardShouldPersistTaps="always">
 					<AddressList list={ suggestions } onAddressPress={ select } />
@@ -167,7 +167,7 @@ class AddressPickScreen extends Component {
 							onAddressPress={select}
 						/>
 					}
-					<AddressList list={ recentAddrs } onAddressPress={ select } />
+					<AddressList icon="time" list={ recentAddrs } onAddressPress={ select } />
 					{renderMap()}
 				</ScrollView>
 			</View>

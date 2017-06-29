@@ -35,6 +35,14 @@ export const parseAutocompleteAddress = terms => {
 		parts[map[idx]] = data.value;
 	});
 
-console.log('partssss', parts);
+	console.log('partssss', parts);
 	return parts;
+}
+
+export const shortTitleFromAddressParts = parts => {
+	let {
+		number = '', street = '', city, state
+	} = parts;
+	if (street) return `${number} ${street}`;
+	return `${city}, ${state}`
 }
