@@ -26,13 +26,14 @@ class RouteItemForm extends Component {
 	constructor(props) {
 		super(props);
 		this.renderAddressPicker = this.renderAddressPicker.bind(this);
+		
 	}
 	renderAddressPicker(field, placeholder) {
 		const {input} = field;
 		const {onChange, value} = input;
 
 		const pickAddress = () => {
-			showAddressPicker({ title: 'Start Location', initValue: value })
+			showAddressPicker({ title: placeholder, initValue: value })
 				.then(data => onChange(data))
 		}
 		return (

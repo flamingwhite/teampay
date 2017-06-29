@@ -1,16 +1,52 @@
 import React from 'react';
-import { Card, List, ListItem } from 'react-native-elements';
+// import { Card, List, ListItem } from 'react-native-elements';
+import { Card, CardItem, Icon, Text, Body } from 'native-base';
+import {StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native';
+
+const styles = StyleSheet.create({
+
+
+});
+
+const lines = parts => {
+	let { number = '', street = '', city, state, country } = parts;
+	let firstLine, secondLine;
+	if (street) {
+		firstLine = `${number}, ${street}`;
+		secondLine = `${city}, ${state}`;
+	} else {
+		firstLine = city;
+		secondLine = state;
+	}
+	return {
+		firstLine,
+		secondLine
+	};
+}
 
 const AddressList = props => {
-	let {list = [], onAddressPress} = props;
+	const {list = [], onAddressPress} = props;
+
+	const renderRow = item => {
+		let { firstLine, secondLine } = lines(item.parts);
+		return (
+			<TouchableOpacity onPress={() => onAddressPress(item)}>
+				<CardItem >
+					<Icon name="pin"></Icon>
+					<Body>
+						<Text>{firstLine}</Text>
+						<Text>{secondLine}</Text>
+					</Body>
+				</CardItem>
+			</TouchableOpacity>
+		);
+	}
 
 	return (
-		<List>
-			{ list.map((item, i) => (
-				<ListItem key={i} title={item.description} leftIcon={{ name: 'home' }} onPress={() => onAddressPress(item)} />
-				))
-			}
-		</List>
+		<Card>
+			{ list.map(renderRow) }
+		</Card>
 	)
 
 

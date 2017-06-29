@@ -18,7 +18,7 @@ const showAddressPicker = (config = {}) => {
 		dismissModal();
 		deferred.resolve(data)
 	};
-	let onCancel = data => {
+	let onCancel = () => {
 		dismissModal();
 		deferred.reject('Cancelled');
 	};

@@ -11,7 +11,7 @@ const RouteListItem = ({routeItem, onRouteClick}) => {
 			</Left>
 			<Body>
 				<Text style={ { height: 40 } }>
-					{routeItem.fromLocation.alias} => {routeItem.toLocation.alias}
+					{routeItem.startAddress.title} => {routeItem.endAddress.title}
 				</Text>
 			</Body>
 			<Right>

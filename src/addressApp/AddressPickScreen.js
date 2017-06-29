@@ -1,17 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-native-modal';
-import { Input, Text, Button, Content, Left, Body, Right, Item, Icon, ListItem, Separator } from 'native-base';
-import { StyleSheet, TextInput, View, LayoutAnimation, TouchableHighlight, Keyboard, ScrollView } from 'react-native';
+import {Text, StyleSheet, TextInput, View, LayoutAnimation, TouchableHighlight, Keyboard, ScrollView } from 'react-native';
 import Rx from 'rxjs/Rx';
 import { connect } from 'react-redux';
 import { addAddressHistory } from '../addressApp/addressActionCreator';
 import { recentAddressSelector } from '../addressApp/addressSelectors';
 import { getCurrentLocation, placeAutocompleteSearch, googlePlaceDetail } from '../lib/googleAPIs';
-import { clearAddressHistory } from '../addressApp/addressActionCreator';
 import AddressList from '../addressApp/components/AddressList';
 import navbarButton from '../decorators/navbarButton';
+import MapView from 'react-native-maps';
 
+const styles = StyleSheet.create({
+	container: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+	},
+	map: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+	},
+});
 
 @navbarButton(null, {
 	id: 'back',
@@ -36,12 +52,18 @@ class AddressPickScreen extends Component {
 		let { onCancel, leftClick } = props;
 		leftClick.subscribe(onCancel);
 
-		
-
 		this.select = this.select.bind(this);
 		this.changeSearch = this.changeSearch.bind(this);
 		this.addressStream = new Rx.Subject();
 		this.searchStream = new Rx.Subject();
+		this.renderMap = this.renderMap.bind(this);
+		
+
+		this.currentLocationPromise = getCurrentLocation();
+		this.currentLocationPromise.then(currentLocation =>
+			this.setState({
+				currentLocation
+			}));
 
 
 		this.searchStream
@@ -55,29 +77,9 @@ class AddressPickScreen extends Component {
 					suggestions: places
 				});
 				this.forceUpdate();
-			})
-
-
-	}
-	// componentWillReceiveProps(props) {
-	// 	let {initValue} = props;
-	// 	console.log('the initvalue in receive', initValue);
-
-	// 	if (initValue) {
-	// 		this.setState({
-	// 			address: initValue,
-	// 			searchValue: initValue.title
-	// 		})
-	// 	}
-
-	// }
-
-	componentWillMount() {
-		getCurrentLocation().then(currentLocation => {
-			this.setState({
-				currentLocation
 			});
-		})
+
+
 	}
 
 	async select(data) {
@@ -110,13 +112,33 @@ class AddressPickScreen extends Component {
 		this.searchStream.next(search);
 	}
 
+	renderMap() {
+		let loc = this.props.initValue
+		if (!loc) {
+			loc = this.state.currentLocation;		
+		}
+		if (!loc) {
+			return <Text/>
+		}
+		let { geocode } = loc;
+		return (
+			<MapView style={styles.map} style={{ height: 200 }} region={{...geocode, latitudeDelta: 0.3, longitudeDelta: 0.3}}>
+				<MapView.Marker
+					title={loc.title}
+					coordinate={geocode}
+				/>
+			</MapView>
+		);
+		
+	}
+
 	render() {
 
 		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
 
 		let {recentAddrs} = this.props;
 		let { currentLocation, suggestions, searchValue} = this.state;
-		let { select, cancel,  changeSearch} = this;
+		let { select, changeSearch, renderMap} = this;
 
 
 		return (
@@ -132,16 +154,10 @@ class AddressPickScreen extends Component {
 					}
 					<AddressList list={ suggestions } onAddressPress={ select }></AddressList>
 					<AddressList list={ recentAddrs } onAddressPress={ select } />
-					<Button onPress={ cancel }>
-						<Text>Cancel</Text>
-					</Button>
-					<Button danger onPress={ () => this.props.dispatch(clearAddressHistory()) }>
-						<Text>Clear History</Text>
-					</Button>
-					<TextInput placeholder="abc" style={ { height: 40 } }></TextInput>
+					{renderMap()}
 				</ScrollView>
 			</View>
-			);
+		);
 	}
 
 }

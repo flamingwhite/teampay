@@ -89,7 +89,8 @@ const startApp = () => {
 	// 	}
 	// });
 	Navigation.startTabBasedApp({
-		tabs: [{
+		tabs: [
+			{
 				label: 'One', // tab label as appears under the icon in iOS (optional)
 				screen: 'todoMainScreen', // unique ID registered with Navigation.registerScreen
 				title: 'TODOScreen One', // title of the screen as appears in the nav bar (optional)

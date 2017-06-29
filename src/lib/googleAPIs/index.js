@@ -1,25 +1,4 @@
-const apiKey = 'AIzaSyAJAmwOGIGRlWliaI2YbW53FwvHerVfIaE';
-const createGooglePlaceUrl = placeId => {
-
-	let url = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${apiKey}`;
-
-	console.log('the url is 0000000,', url);
-	return url
-
-}
-
-const createGoogleReverseGeocoingUrl = (latitude, longitude) => {
-	let url = `https://maps.googleapis.com/maps/api/geocode/json?key=${apiKey}&latlng=${latitude},${longitude}`
-
-	console.log('reverse geourl', url);
-	return url;
-}
-
-const createGoogleAutoCompleteUrl = input => {
-	let url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?&input=${encodeURI(input)}&key=${apiKey}`;
-	console.log('autocomplete url', url);
-	return url;
-};
+import {createGoogleAutoCompleteUrl, createGooglePlaceUrl,createGoogleReverseGeocodingUrl, parseGooglePlaceDetail, parseAutocompleteAddress} from './addressUtil';
 
 const googlePlaceDetail = placeId =>
 	fetch(createGooglePlaceUrl(placeId))
@@ -27,21 +6,24 @@ const googlePlaceDetail = placeId =>
 	.then(({
 		result
 	}) => {
-		let {
+		console.log('resulttt', result);
+		const {
 			formatted_address: title
 		} = result;
-		let {
+		const {
 			location
 		} = result.geometry;
-		let geocode = {
+		const geocode = {
 			latitude: location.lat,
 			longitude: location.lng
 		};
+		const parts = parseGooglePlaceDetail(result.address_components);
 
 		return {
 			placeId,
 			title,
-			geocode
+			geocode,
+			parts
 		};
 	});
 
@@ -51,7 +33,7 @@ const reverseGeocoding = ({
 		latitude,
 		longitude
 	}) =>
-	fetch(createGoogleReverseGeocoingUrl(latitude, longitude))
+	fetch(createGoogleReverseGeocodingUrl(latitude, longitude))
 	.then(r => r.json())
 	.then(data => {
 		let {
@@ -67,10 +49,13 @@ const reverseGeocoding = ({
 			longitude: firstAddress.geometry.location.lng
 		};
 
+		const parts = parseGooglePlaceDetail(firstAddress.address_components);
+
 		return {
 			placeId,
 			title,
-			geocode
+			geocode,
+			parts
 		}
 
 	});
@@ -89,7 +74,10 @@ const getCurrentLocation = () => {
 			reverseGeocoding({
 				latitude,
 				longitude
-			}).then(resolve);
+			}).then(data => {
+				console.log('currrrrr', data);
+				resolve(data)
+			});
 		})
 	});
 
@@ -101,9 +89,11 @@ const placeAutocompleteSearch = input =>
 	.then(r => r.json())
 	.then(data => {
 		let { predictions } = data;
+		console.log('predi', predictions);
 		return predictions.slice(0, 4).map(place => ({
-			description: place.description,
-			placeId: place.place_id
+			description: place.description.slice(0, place.description.lastIndexOf(',')),
+			placeId: place.place_id,
+			parts: parseAutocompleteAddress(place.terms)
 		}));
 	})
 
