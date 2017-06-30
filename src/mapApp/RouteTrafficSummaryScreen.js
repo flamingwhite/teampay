@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import {routeTrafficDataSelector} from './mapSelectors';
 import {fetchTrafficData} from './mapActionCreators';
 import MapView from 'react-native-maps';
-import PLine from 'polyline';
+import {getIcon} from '../icons';
 
 
 
@@ -45,7 +45,7 @@ class RouteTrafficSummaryScreen extends Component {
 
 	componentWillMount() {
 		let { route, dispatch } = this.props;
-		// dispatch(fetchTrafficData(route));
+		dispatch(fetchTrafficData(route));
 	}
 
 	navigateToRouteEdit() {
@@ -62,24 +62,44 @@ class RouteTrafficSummaryScreen extends Component {
 		})
 	}
 
+	componentDidMount() {
+		let startAddress = this.props.route.startAddress;
+		let endAddress = this.props.route.endAddress;
+		this.mapRef.fitToCoordinates([startAddress.geocode, endAddress.geocode], {
+			edgePadding: {
+				top:40, right:40,bottom:40, left: 40
+			},
+			animated: true
+		})
+
+	}
+
 	render() {
 		console.log('traffic datas', this.props.trafficData);
 		let { route } = this.props;
 		console.log('geocode is', route);
-		let {polyline} = this.props.trafficData[0]
+		let {polyline} = this.props.trafficData[this.props.trafficData.length -1]
+		console.log('polyline is ', polyline);
 		return (
 			<Container>
 				<Content>
-					<MapView style={styles.map} style={{height:200}}>
+					<MapView ref={r => this.mapRef=r} style={styles.map} style={{height:200}}>
 						<MapView.Marker
 							coordinate={route.startAddress.geocode}
+							image={getIcon('ios-radio-button-on')}
+							title={route.startAddress.title}
+						/>
+						<MapView.Marker
+							coordinate={route.endAddress.geocode}
+							title={route.endAddress.title}
 						/>
 						<MapView.Polyline
-							coordinates={PLine.decode(polyline.points)}
+							coordinates={polyline}
+							strokeWidth={3}
 						/>
 					</MapView>
 					{
-						this.props.trafficData.map(td => <Button><Text>{td.durationInTraffic}</Text></Button>)
+						this.props.trafficData.reverse().map(td => <Button><Text>{td.durationInTraffic}</Text></Button>)
 					}
 					<Button onPress={ this.navigateToRouteEdit }>
 						<Text>Add a Route</Text>

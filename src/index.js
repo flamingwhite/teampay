@@ -37,7 +37,8 @@ function setup() {
 			'ios-home',
 			'ios-add',
 			'ios-arrow-back',
-			'ios-close'
+			'ios-close',
+			'ios-radio-button-on'
 		]),
     ];
 

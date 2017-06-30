@@ -6,6 +6,7 @@ import {
 	parseGooglePlaceDetail,
 	parseAutocompleteAddress
 } from './addressUtil';
+import PolylineParser from 'polyline';
 
 const googlePlaceDetail = placeId =>
 	fetch(createGooglePlaceUrl(placeId))
@@ -118,12 +119,18 @@ const trafficDuration = (placeIdOne, placeIdTwo) =>
 		let leg = legs[0];
 		let { distance, duration, duration_in_traffic } = leg;
 		console.log(distance, duration, duration_in_traffic);
+		console.log('polyline raw', routes[0].overview_polyline);
+		console.log(PolylineParser.decode(routes[0].overview_polyline));
 		
 		return {
 			distance: distance.text,
 			duration: duration.text,
 			durationInTraffic: duration_in_traffic.text,
-			polyline: routes[0].overview_polyline,
+			polyline: PolylineParser.decode(routes[0].overview_polyline.points)
+				.map(([latitude, longitude]) => ({
+					latitude,
+					longitude
+				})),
 		};
 	})
 
