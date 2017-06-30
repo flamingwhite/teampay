@@ -4,7 +4,10 @@ export const createGooglePlaceUrl = placeId => `https://maps.googleapis.com/maps
 
 export const createGoogleReverseGeocodingUrl = (latitude, longitude) => `https://maps.googleapis.com/maps/api/geocode/json?key=${apiKey}&latlng=${latitude},${longitude}`
 
-export const createGoogleAutoCompleteUrl = input => `https://maps.googleapis.com/maps/api/place/autocomplete/json?&input=${encodeURI(input)}&key=${apiKey}`
+export const createGoogleAutoCompleteUrl = input => `https://maps.googleapis.com/maps/api/place/autocomplete/json?&input=${encodeURI(input)}&key=${apiKey}`;
+
+export const createTrafficDurationUrl = (placeIdOne, placeIdTwo) =>
+	`https://maps.googleapis.com/maps/api/directions/json?origin=place_id:${placeIdOne}&destination=place_id:${placeIdTwo}&key=${apiKey}&departure_time=now`;
 
 
 export const parseGooglePlaceDetail = addressComponent => {

@@ -9,8 +9,10 @@
   "dependencies": {
     "@expo/vector-icons": "^5.0.0",
     "babel-preset-react-native-stage-0": "^1.0.1",
+    "cron": "^1.2.1",
     "firebase": "^4.1.1",
     "native-base": "^2.1.5",
+    "polyline": "^0.2.0",
     "promise-defer": "^1.0.0",
     "prop-types": "^15.5.10",
     "ramda": "^0.24.1",

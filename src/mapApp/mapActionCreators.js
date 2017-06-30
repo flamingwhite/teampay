@@ -5,6 +5,9 @@ import {
 } from '../lib/simpleReduxTool';
 import createUUID from '../lib/uuidTool';
 import {
+	trafficDuration
+} from '../lib/googleAPIs';
+import {
 	get
 } from '../lib/httpTool';
 
@@ -21,29 +24,6 @@ const MapActions = asyncActions.map(createAsyncHttpAction)
 		...cur
 	}), syncActions);
 
-
-
-const createDirectionAPIUrl = (placeOne, placeTwo) => `https://maps.googleapis.com/maps/api/directions/json?origin=place_id:${placeOne}&destination=place_id:${placeTwo}&key=AIzaSyAJAmwOGIGRlWliaI2YbW53FwvHerVfIaE&departure_time=now`;
-
-const fetchDirection = (placeOne, placeTwo) => dispatch => httpActionDispatcher({
-	dispatch,
-	actionName: 'FETCH_DIRECTION_DATA',
-	url: createDirectionAPIUrl(placeOne, placeTwo),
-});
-
-const fetchDirectionData = routeConfig => dispatch => {
-
-	let {
-		fromLocation,
-		toLocation
-	} = routeConfig;
-	let fromPlaceId = fromLocation.place_id;
-	let toPlaceId = toLocation.place_id;
-
-	return fetchDirection(fromPlaceId, toPlaceId);
-}
-
-
 const extractFromDirectionData = data => {
 	let route = data.routes[0];
 	return {
@@ -52,15 +32,12 @@ const extractFromDirectionData = data => {
 };
 const fetchTrafficData = route => dispatch => {
 	let {
-		fromLocation,
-		toLocation
+		startAddress,
+		endAddress
 	} = route;
-	let fromPlaceId = fromLocation.googlePlaceId;
-	let toPlaceId = toLocation.googlePlaceId;
-	let url = createDirectionAPIUrl(fromPlaceId, toPlaceId);
-	return get(url).then(data => {
-			return extractFromDirectionData(data)
-		}).then(data => ({
+	let fromPlaceId = startAddress.placeId;
+	let toPlaceId = endAddress.placeId;
+	return trafficDuration(fromPlaceId, toPlaceId).then(data => ({
 			...data,
 			time: new Date(),
 			routeId: route.id,

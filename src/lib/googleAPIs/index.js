@@ -1,4 +1,11 @@
-import {createGoogleAutoCompleteUrl, createGooglePlaceUrl,createGoogleReverseGeocodingUrl, parseGooglePlaceDetail, parseAutocompleteAddress} from './addressUtil';
+import {
+	createGoogleAutoCompleteUrl,
+	createGooglePlaceUrl,
+	createGoogleReverseGeocodingUrl,
+	createTrafficDurationUrl,
+	parseGooglePlaceDetail,
+	parseAutocompleteAddress
+} from './addressUtil';
 
 const googlePlaceDetail = placeId =>
 	fetch(createGooglePlaceUrl(placeId))
@@ -88,7 +95,9 @@ const placeAutocompleteSearch = input =>
 	fetch(createGoogleAutoCompleteUrl(input))
 	.then(r => r.json())
 	.then(data => {
-		let { predictions } = data;
+		let {
+			predictions
+		} = data;
 		console.log('predi', predictions);
 		return predictions.slice(0, 4).map(place => ({
 			description: place.description.slice(0, place.description.lastIndexOf(',')),
@@ -97,9 +106,31 @@ const placeAutocompleteSearch = input =>
 		}));
 	})
 
+const trafficDuration = (placeIdOne, placeIdTwo) =>
+	fetch(createTrafficDurationUrl(placeIdOne, placeIdTwo))
+	.then(r => r.json())
+	.then(r => {
+		console.log('duration', r);
+		let {
+			routes
+		} = r;
+		let { legs } = routes[0];
+		let leg = legs[0];
+		let { distance, duration, duration_in_traffic } = leg;
+		console.log(distance, duration, duration_in_traffic);
+		
+		return {
+			distance: distance.text,
+			duration: duration.text,
+			durationInTraffic: duration_in_traffic.text,
+			polyline: routes[0].overview_polyline,
+		};
+	})
+
 export {
 	googlePlaceDetail,
 	reverseGeocoding,
 	getCurrentLocation,
-	placeAutocompleteSearch
+	placeAutocompleteSearch,
+	trafficDuration
 };
