@@ -7,6 +7,9 @@ import {routeTrafficDataSelector} from './mapSelectors';
 import {fetchTrafficData} from './mapActionCreators';
 import MapView from 'react-native-maps';
 import {getIcon} from '../icons';
+import controlNavTab from '../decorators/controlNavTab';
+import navbarButton from '../decorators/navbarButton';
+import {Navigation} from 'react-native-navigation';
 
 
 
@@ -17,6 +20,7 @@ const styles = {
 		left: 0,
 		right: 0,
 		bottom: 0,
+		height:200
 	},
 	searchItem: {
 		borderBottomWidth: 0	
@@ -29,6 +33,14 @@ const styles = {
 };
 
 
+@navbarButton({
+	leftButtons: [{
+		id: 'back',
+		get icon() {
+			return getIcon('ios-arrow-back');
+		}
+	}]
+})
 @connect(
 	(state, props) => ({
 		trafficData: routeTrafficDataSelector(state, props)
@@ -40,6 +52,8 @@ class RouteTrafficSummaryScreen extends Component {
 		super(props);
 		this.navigateToRouteEdit = this.navigateToRouteEdit.bind(this);
 		console.log('routes', props.route);
+		// this.props.toggleNavBar(false)
+		props.navButtonClick('back').subscribe(() => Navigation.dismissModal());
 
 	}
 
@@ -62,17 +76,10 @@ class RouteTrafficSummaryScreen extends Component {
 		})
 	}
 
-	// componentDidMount() {
-	// 	let startAddress = this.props.route.startAddress;
-	// 	let endAddress = this.props.route.endAddress;
-	// 	this.mapRef.fitToCoordinates([startAddress.geocode, endAddress.geocode], {
-	// 		edgePadding: {
-	// 			top:40, right:40,bottom:40, left: 40
-	// 		},
-	// 		animated: true
-	// 	})
+	componentDidMount() {
+		// this.props.toggleNavBar(false)
+	}
 
-	// }
 
 	render() {
 		console.log('traffic datas', this.props.trafficData);
@@ -84,14 +91,16 @@ class RouteTrafficSummaryScreen extends Component {
 		return (
 			<Container>
 				<Content>
-					<MapView ref={r => this.mapRef = r} style={styles.map} style={{ height: 200 }}
+					<MapView
+						ref={r => this.mapRef = r}
+						style={styles.map}
 						onLayout={() => this.mapRef.fitToCoordinates([startAddress.geocode, endAddress.geocode], {
 							edgePadding: {
 								top: 40,
 								bottom: 40,
 								right: 40,
 								left: 40
-							}, animated: true
+							}, animated: false
 						})}
 						
 						

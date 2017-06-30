@@ -87,9 +87,9 @@ class MapMainScreen extends Component {
 	navigateToTrafficSummary(route) {
 		console.log('route in callbackkkeeee', route);
 		let {navigator} = this.props;
-		navigator.push({
+		navigator.showModal({
 			screen: 'routeTrafficSummaryScreen',
-			title: 'summary ' + route.id,
+			title: 'summary',
 			animated: true,
 			passProps: {
 				route
