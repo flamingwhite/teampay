@@ -62,17 +62,17 @@ class RouteTrafficSummaryScreen extends Component {
 		})
 	}
 
-	componentDidMount() {
-		let startAddress = this.props.route.startAddress;
-		let endAddress = this.props.route.endAddress;
-		this.mapRef.fitToCoordinates([startAddress.geocode, endAddress.geocode], {
-			edgePadding: {
-				top:40, right:40,bottom:40, left: 40
-			},
-			animated: true
-		})
+	// componentDidMount() {
+	// 	let startAddress = this.props.route.startAddress;
+	// 	let endAddress = this.props.route.endAddress;
+	// 	this.mapRef.fitToCoordinates([startAddress.geocode, endAddress.geocode], {
+	// 		edgePadding: {
+	// 			top:40, right:40,bottom:40, left: 40
+	// 		},
+	// 		animated: true
+	// 	})
 
-	}
+	// }
 
 	render() {
 		console.log('traffic datas', this.props.trafficData);
@@ -80,10 +80,22 @@ class RouteTrafficSummaryScreen extends Component {
 		console.log('geocode is', route);
 		let {polyline} = this.props.trafficData[this.props.trafficData.length -1]
 		console.log('polyline is ', polyline);
+		let { startAddress, endAddress } = route;
 		return (
 			<Container>
 				<Content>
-					<MapView ref={r => this.mapRef=r} style={styles.map} style={{height:200}}>
+					<MapView ref={r => this.mapRef = r} style={styles.map} style={{ height: 200 }}
+						onLayout={() => this.mapRef.fitToCoordinates([startAddress.geocode, endAddress.geocode], {
+							edgePadding: {
+								top: 30,
+								bottom: 40,
+								right: 40,
+								left: 40
+							}, animated: true
+						})}
+						
+						
+					>
 						<MapView.Marker
 							coordinate={route.startAddress.geocode}
 							image={getIcon('ios-radio-button-on')}
