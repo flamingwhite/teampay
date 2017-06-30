@@ -87,7 +87,7 @@ class RouteTrafficSummaryScreen extends Component {
 					<MapView ref={r => this.mapRef = r} style={styles.map} style={{ height: 200 }}
 						onLayout={() => this.mapRef.fitToCoordinates([startAddress.geocode, endAddress.geocode], {
 							edgePadding: {
-								top: 30,
+								top: 40,
 								bottom: 40,
 								right: 40,
 								left: 40
