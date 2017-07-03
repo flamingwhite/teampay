@@ -14,6 +14,7 @@ import controlNavTabs from '../decorators/controlNavTab';
 import {Navigation} from 'react-native-navigation';
 import {showAddressPicker} from '../lib/addressPickService';
 import {getIcon, addIcon} from '../icons';
+import {createCronForRoute} from '../cronManager';
 
 
 console.log(MapView);
@@ -71,6 +72,9 @@ class MapMainScreen extends Component {
 		}
 		this.addNode=this.addNode.bind(this)
 		this.onAddressSelect = this.onAddressSelect.bind(this);
+
+		let r = createCronForRoute('my route');
+		// r.start()
 
 	}
 	navigateToRouteInput() {
