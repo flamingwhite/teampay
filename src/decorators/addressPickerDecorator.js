@@ -5,11 +5,11 @@ import { Input, Text, Button, Content, Left, Body, Right, Item, Icon, ListItem, 
 import { StyleSheet, TextInput, View, LayoutAnimation, TouchableHighlight, Keyboard, ScrollView } from 'react-native';
 import Rx from 'rxjs/Rx';
 import {connect} from 'react-redux';
-import {addAddressHistory} from '../addressApp/addressActionCreator';
-import {recentAddressSelector} from '../addressApp/addressSelectors';
+import {addAddressHistory} from '../googleAddressPicker/addressActionCreator';
+import {recentAddressSelector} from '../googleAddressPicker/addressSelectors';
 import {getCurrentLocation, placeAutocompleteSearch, googlePlaceDetail} from '../lib/googleAPIs';
-import { clearAddressHistory } from '../addressApp/addressActionCreator';
-import AddressList from '../addressApp/components/AddressList';
+import { clearAddressHistory } from '../googleAddressPicker/addressActionCreator';
+import AddressList from '../googleAddressPicker/components/AddressList';
 
 const addressPickerDecorator = config => InnerCmp => {
 

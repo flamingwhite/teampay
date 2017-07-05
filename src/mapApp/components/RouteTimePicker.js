@@ -42,7 +42,6 @@ const RouteTimePicker = ({ date, maxDate=null, onDateChange }) => (
 					borderWidth: 0,
 					borderBottomWidth:1,
 					width:500,
-					fontSize: 20
 				},
 				placeholderText: {
 				},

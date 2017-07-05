@@ -1,7 +1,5 @@
 import React from 'react';
-// import { Card, List, ListItem } from 'react-native-elements';
 import { Card, CardItem, Icon, Text, Body } from 'native-base';
-import {StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 
 const styles = {
