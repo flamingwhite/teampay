@@ -11,6 +11,8 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import CameraTest from './components/CameraTest';
 import { appStateChange } from '../appState/appStateActionCreator';
 import {AsyncStorage } from 'react-native';
+import navbarButton from '../decorators/navbarButton';
+import {getIcon} from '../icons';
 
 
 
@@ -52,11 +54,33 @@ PushNotification.configure({
 });
 
 
+@navbarButton({
+	leftButtons: [{
+		id: 'menu',
+		get icon() {
+			return getIcon('ios-menu');
+		}
+	}]
+})
 @connect( state => ({ todos: state.todoChunk.todos }))
 class TodoApp extends Component {
 
 	constructor(props) {
 		super(props);
+
+		const { navButtonClick, navigator } = props;
+		
+		navButtonClick('menu').subscribe(() => {
+			console.log('toggle draswer');
+			navigator.toggleDrawer({
+				to: 'open',
+				side: 'left',
+				animated: true
+			});
+			
+		})
+
+
 		this.onTodoClick = this.onTodoClick.bind(this);
 		this.handleStateChange = this.handleStateChange.bind(this);
 	}

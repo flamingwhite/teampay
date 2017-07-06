@@ -38,7 +38,8 @@ function setup() {
 			'ios-add',
 			'ios-arrow-back',
 			'ios-close',
-			'ios-radio-button-on'
+			'ios-radio-button-on',
+			'ios-menu'
 		]),
     ];
 
@@ -55,14 +56,16 @@ const startApp = () => {
 				screen: 'todoMainScreen', // unique ID registered with Navigation.registerScreen
 				title: 'TODOScreen One', // title of the screen as appears in the nav bar (optional)
 				icon: getIcon('ios-home-outline'),
-				selectedIcon: getIcon('ios-home')
+				selectedIcon: getIcon('ios-home'),
+				// navigatorStyle
 			},
 			{
 				label: 'MapDemp',
 				screen: 'mapMainScreen',
 				title: 'MapsToTest',
 				icon: getIcon('ios-navigate'),
-				selectIcon: getIcon('ios-navigate')
+				selectIcon: getIcon('ios-navigate'),
+				navigatorStyle
 			},
 			{
 				label: 'Locations',
@@ -82,11 +85,11 @@ const startApp = () => {
 		},
 		drawer: { // optional, add this if you want a side menu drawer in your app
 			left: { // optional, define if you want a drawer from the left
-				screen: 'todoDetailScreen', // unique ID registered with Navigation.registerScreen
+				screen: 'todoMainScreen', // unique ID registered with Navigation.registerScreen
 				passProps: {} // simple serializable object that will pass as props to all top screens (optional)
 			},
 			right: { // optional, define if you want a drawer from the right
-				screen: 'todoDetailScreen', // unique ID registered with Navigation.registerScreen
+				screen: 'todoMainScreen', // unique ID registered with Navigation.registerScreen
 				passProps: {} // simple serializable object that will pass as props to all top screens (optional)
 			},
 			disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
