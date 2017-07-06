@@ -7,7 +7,7 @@ import { Field, reduxForm } from 'redux-form';
 import { reduxFormValues } from '../../lib/reduxFormTool';
 import RouteTimePicker from './RouteTimePicker';
 import {showAddressPicker} from '../../lib/addressPickService';
-import {shortTitleFromAddressParts} from '../../lib/googleAPIs/addressUtil';
+import {shortTitleFromAddressParts} from '../../googleAddressPicker/googleAPIs/addressUtil';
 
 
 

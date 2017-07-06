@@ -3,7 +3,6 @@ import { Field } from 'redux-form';
 import { StyleSheet } from 'react-native';
 import { Content, View, Text, Input } from 'native-base';
 import ReduxInput from '../../genericCmps/reduxInput';
-import GooglePlaceInput from '../../genericCmps/GooglePlaceInput';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';

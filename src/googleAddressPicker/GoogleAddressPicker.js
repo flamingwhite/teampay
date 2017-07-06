@@ -7,10 +7,10 @@ import { connect } from 'react-redux';
 import { addAddressHistory } from './addressActionCreator';
 import { recentAddressSelector } from './addressSelectors';
 import { getCurrentLocation, placeAutocompleteSearch, googlePlaceDetail } from './googleAPIs';
-import AddressList from '../addressApp/components/AddressList';
+import AddressList from './components/AddressList';
 import MapView from 'react-native-maps';
 import {getIcon} from '../icons';
-import {shortTitleFromAddressParts} from '../lib/googleAPIs/addressUtil';
+import {shortTitleFromAddressParts} from './googleAPIs/addressUtil';
 
 const styles = {
 	map: {

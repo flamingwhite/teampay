@@ -5,12 +5,9 @@ import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RouteListContainer from './containers/RouteListContainer';
-import { Col, Row, Grid } from "react-native-easy-grid";
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import navbarButton from '../decorators/navbarButton';
-import AddressPicker from '../genericCmps/AddressPicker';
-import controlNavTabs from '../decorators/controlNavTab';
 import {Navigation} from 'react-native-navigation';
 import {showAddressPicker} from '../lib/addressPickService';
 import {getIcon, addIcon} from '../icons';
@@ -132,10 +129,6 @@ class MapMainScreen extends Component {
 					<Button onPress={this.addNode} style={{position:'absolute',right:0,bottom:0}}><Text>Add</Text></Button>
 					<Button onPress={this.pickAddr} ><Text>Pick</Text></Button>
 					<RouteListContainer onRouteClick={ this.navigateToTrafficSummary }></RouteListContainer>
-					<AddressPicker initValue={this.state.addr} onAddressSelect={onAddressSelect}></AddressPicker>
-					{
-						this.state.nodes.map(n => <Text style={{backgroundColor:'green', width:this.state.width}}>{n}</Text>)
-					}
 				</Content>
 			</Container>
 			);
