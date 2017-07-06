@@ -2,6 +2,8 @@ import {createSelector} from 'reselect';
 import {config} from './config';
 let {stateChunkName, recentLimit = 3} = config;
 
+console.log('statechunk', stateChunkName);
+
 const recentAddressCreator = (historySize = 3) => createSelector(
 	state => state[stateChunkName].addressHistory,
 	(_, props) => props.initValue,

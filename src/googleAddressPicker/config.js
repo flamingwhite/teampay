@@ -11,8 +11,11 @@ const init = opts => {
 	};
 }
 
+const getConfig = () => config;
+
 export {
 	init,
-	config
+	config,
+	getConfig,
 }
 

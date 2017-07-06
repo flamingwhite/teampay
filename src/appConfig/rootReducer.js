@@ -5,7 +5,12 @@ import {AddressReducer} from '../googleAddressPicker';
 import LocationReducer from '../locationApp/locationReducers';
 import { reducer } from 'redux-form';
 import AppStateReducer from '../appState/appStateReducer';
+import {init} from '../googleAddressPicker';
 
+const googleAddressChunk = 'addressChunk'
+init({
+	stateChunkName: googleAddressChunk
+})
 
 
 
@@ -14,7 +19,7 @@ const combined = combineReducers({
 	todoChunk: TodoReducer,
 	mapChunk: MapReducer,
 	locationChunk: LocationReducer,
-	addressChunk: AddressReducer,
+	[googleAddressChunk]: AddressReducer,
 	form: reducer
 });
 
