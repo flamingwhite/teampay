@@ -8,11 +8,11 @@ import { addTodo, toggleTodo } from './todoService';
 import TodoListContainer from './components/TodoListContainer';
 import FooterFilterLink from './components/TodoFilterTab';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import CameraTest from './components/CameraTest';
 import { appStateChange } from '../appState/appStateActionCreator';
 import {AsyncStorage } from 'react-native';
 import navbarButton from '../decorators/navbarButton';
 import {getIcon} from '../icons';
+import TestInter from './animationCmp/TestInter';
 
 
 
@@ -127,7 +127,7 @@ class TodoApp extends Component {
 						<Text></Text>
 					</Content>
 					<Content tabLabel="World">
-						<CameraTest></CameraTest>
+						<TestInter></TestInter>
 						<Text>World text</Text>
 					</Content>
 					<Content tabLabel="How">
