@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Text, Content, Button, ListItem } from 'native-base';
+import { Container, Text, Content, Button } from 'native-base';
 import { StyleSheet, View, LayoutAnimation } from 'react-native';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RouteListContainer from './containers/RouteListContainer';
 
-import Icon from 'react-native-vector-icons/Ionicons';
 import navbarButton from '../decorators/navbarButton';
-import {Navigation} from 'react-native-navigation';
 import {showAddressPicker} from '../lib/addressPickService';
-import {getIcon, addIcon} from '../icons';
-import {createCronForRoute} from '../cronManager';
+import { getIcon } from '../icons';
 
 
 console.log(MapView);
@@ -69,9 +66,6 @@ class MapMainScreen extends Component {
 		}
 		this.addNode=this.addNode.bind(this)
 		this.onAddressSelect = this.onAddressSelect.bind(this);
-
-		let r = createCronForRoute('my route');
-		// r.start()
 
 	}
 	navigateToRouteInput() {

@@ -1,30 +1,30 @@
-import { createReducer} from '../lib/simpleReduxTool';
-import { MapActions } from './mapActionCreators';
+import {
+	createReducer
+} from '../lib/simpleReduxTool';
+import {
+	MapActions
+} from './mapActionCreators';
 
+import R from 'ramda';
 
-const extractFromDirectionData = data => {
-	let route = data.routes[0];
-	return {
-		time: route.legs[0].duration_in_traffic.text
-	};
-};
+const addTrafficLens = data => R.over(
+	R.lensPath(['trafficData', data.routeId]),
+	R.pipe(
+		R.defaultTo([]),
+		R.append(data)
+	)
+);
+
 
 const mapHandlers = {
 	[MapActions.ADD_ROUTE]: (state, action) => ({
 		...state,
 		routes: state.routes.concat(action.route)
 	}),
-	[MapActions.FETCH_DIRECTION_DATA_SUCCESS]: (state, action) => {
-		const data = action.data;
-		return {
-			...state,
-			trafficData: {
-				...state.trafficData,
-				[data.routeId]: (state.trafficData[data.routeId] || []).concat(data)
-			}
-		};
-	},
-	[MapActions.DELETE_ROUTE]: (state, { routeId }) => ({
+	[MapActions.FETCH_DIRECTION_DATA_SUCCESS]: (state, {data}) => addTrafficLens(data)(state),
+	[MapActions.DELETE_ROUTE]: (state, {
+		routeId
+	}) => ({
 		...state,
 		routes: state.routes.filter(r => r.id !== routeId)
 	})
@@ -38,4 +38,3 @@ const MapReducer = createReducer(mapHandlers, {
 
 
 export default MapReducer;
-

@@ -57,7 +57,7 @@ const startApp = () => {
 				title: 'TODOScreen One', // title of the screen as appears in the nav bar (optional)
 				icon: getIcon('ios-home-outline'),
 				selectedIcon: getIcon('ios-home'),
-				// navigatorStyle
+				navigatorStyle
 			},
 			{
 				label: 'MapDemp',
@@ -76,9 +76,9 @@ const startApp = () => {
 			}
 		],
 		tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
-			tabBarButtonColor: 'gray', // optional, change the color of the tab icons and text (also unselected)
-			tabBarSelectedButtonColor: '#ff9900', // optional, change the color of the selected tab icon and text (only selected)
-			tabBarBackgroundColor: 'white' // optional, change the background color of the tab bar
+			tabBarButtonColor: '#AAAAAA', // optional, change the color of the tab icons and text (also unselected)
+			tabBarSelectedButtonColor: '#FF851B', // optional, change the color of the selected tab icon and text (only selected)
+			tabBarBackgroundColor: '#111111' // optional, change the background color of the tab bar
 		},
 		appStyle: {
 			orientation: 'portrait' // Sets a specific orientation to the entire app. Default: 'auto'. Supported values: 'auto', 'landscape', 'portrait'

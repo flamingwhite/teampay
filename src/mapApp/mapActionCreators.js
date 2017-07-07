@@ -43,7 +43,6 @@ const fetchTrafficData = route => dispatch => {
 			type: 'FETCH_DIRECTION_DATA_SUCCESS',
 			data
 		}))
-		.catch(e => console.log(e));
 
 
 }
