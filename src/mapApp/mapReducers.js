@@ -7,27 +7,39 @@ import {
 
 import R from 'ramda';
 
-const addTrafficLens = data => R.over(
-	R.lensPath(['trafficData', data.routeId]),
-	R.pipe(
-		R.defaultTo([]),
-		R.append(data)
-	)
-);
-
 
 const mapHandlers = {
-	[MapActions.ADD_ROUTE]: (state, action) => ({
-		...state,
-		routes: state.routes.concat(action.route)
-	}),
-	[MapActions.FETCH_DIRECTION_DATA_SUCCESS]: (state, {data}) => addTrafficLens(data)(state),
+	[MapActions.ADD_ROUTE]: (state, {
+		route
+	}) => R.over(
+		R.lensProp('routes'),
+		R.append(route),
+		state
+	),
+
+	[MapActions.FETCH_DIRECTION_DATA_SUCCESS]: (state, {
+		data
+	}) => R.over(
+		R.lensPath(['trafficData', data.routeId]),
+		R.append(data),
+		state
+	),
+
 	[MapActions.DELETE_ROUTE]: (state, {
 		routeId
-	}) => ({
-		...state,
-		routes: state.routes.filter(r => r.id !== routeId)
-	})
+	}) => R.over(
+		R.lensProp('routes'),
+		R.filter(r => r.id !== routeId),
+		state
+	),
+
+	[MapActions.CLEAR_TRAFFIC_DATA]: (state, {
+		routeId
+	}) => R.over(
+		R.lensProp('trafficData'),
+		R.dissoc(routeId),
+		state
+	)
 };
 
 const MapReducer = createReducer(mapHandlers, {

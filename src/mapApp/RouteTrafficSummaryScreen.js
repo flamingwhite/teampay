@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Text, Content, Button } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {routeTrafficDataSelector} from './mapSelectors';
-import {fetchTrafficData} from './mapActionCreators';
+import {fetchTrafficData, clearTrafficData} from './mapActionCreators';
 import MapView from 'react-native-maps';
 import {getIcon} from '../icons';
 import controlNavTab from '../decorators/controlNavTab';
@@ -55,6 +55,9 @@ class RouteTrafficSummaryScreen extends Component {
 		// this.props.toggleNavBar(false)
 		props.navButtonClick('back').subscribe(() => Navigation.dismissModal());
 
+		this._clearTrafficData = this._clearTrafficData.bind(this);
+		
+
 	}
 
 	componentWillMount() {
@@ -76,15 +79,16 @@ class RouteTrafficSummaryScreen extends Component {
 		})
 	}
 
-	componentDidMount() {
-		// this.props.toggleNavBar(false)
+	_clearTrafficData() {
+		let { route, dispatch } = this.props;
+		dispatch(clearTrafficData(route.id));
 	}
 
 
 	render() {
 		console.log('traffic datas', this.props.trafficData);
 		let { route } = this.props;
-		console.log('geocode is', route);
+
 		let {polyline} = this.props.trafficData[this.props.trafficData.length -1]
 		console.log('polyline is ', polyline);
 		let { startAddress, endAddress } = route;
@@ -114,16 +118,22 @@ class RouteTrafficSummaryScreen extends Component {
 							coordinate={route.endAddress.geocode}
 							title={route.endAddress.title}
 						/>
-						<MapView.Polyline
-							coordinates={polyline}
-							strokeWidth={3}
-						/>
+						{
+							polyline&&
+							<MapView.Polyline
+								coordinates={polyline}
+								strokeWidth={3}
+							/>
+						}
 					</MapView>
 					{
 						this.props.trafficData.reverse().map(td => <Button><Text>{td.durationInTraffic}</Text></Button>)
 					}
 					<Button onPress={ this.navigateToRouteEdit }>
 						<Text>Add a Route</Text>
+					</Button>
+					<Button danger onPress={ this._clearTrafficData }>
+						<Text>Clear TrafficData</Text>
 					</Button>
 				</Content>
 			</Container>

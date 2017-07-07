@@ -1,16 +1,29 @@
-import {createReducer} from '../lib/simpleReduxTool';
-import {AddressActions} from './addressActionCreator';
+import {
+	createReducer
+} from '../lib/simpleReduxTool';
+import {
+	AddressActions
+} from './addressActionCreator';
+
+import R from 'ramda';
 
 
 const addressHandler = {
-	[AddressActions.ADD_ADDRESS_HISTORY]: (state, action) => ({
-		...state,
-		addressHistory: [action.address, ...state.addressHistory.filter(h => h.placeId != action.address.placeId)]
-	}),
-	[AddressActions.CLEAR_ADDRESS_HISTORY]: (state) => ({
-		...state,
-		addressHistory: []
-	})
+
+	[AddressActions.ADD_ADDRESS_HISTORY]: (state, {
+		address
+	}) => R.over(
+		R.lensProp('addressHistory'),
+		R.pipe(
+			R.filter(h => h.placeId !== address.placeId),
+			R.prepend(address)
+		),
+		state
+	),
+	[AddressActions.CLEAR_ADDRESS_HISTORY]: R.set(
+		R.lensProp('addressHistory'),
+		[]
+	)
 };
 
 

@@ -9,7 +9,8 @@ import {
 
 const syncActions = convertArrayToMirrorAction([
 	'ADD_ROUTE',
-	'DELETE_ROUTE'
+	'DELETE_ROUTE',
+	'CLEAR_TRAFFIC_DATA'
 ]);
 
 const asyncActions = ['FETCH_DIRECTION_DATA'];
@@ -20,12 +21,13 @@ const MapActions = asyncActions.map(createAsyncHttpAction)
 		...cur
 	}), syncActions);
 
-const extractFromDirectionData = data => {
-	let route = data.routes[0];
-	return {
-		duration: route.legs[0].duration_in_traffic.text
-	};
-};
+// const extractFromDirectionData = data => {
+// 	let route = data.routes[0];
+// 	return {
+// 		duration: route.legs[0].duration_in_traffic.text
+// 	};
+// };
+
 const fetchTrafficData = route => dispatch => {
 	let {
 		startAddress,
@@ -47,6 +49,11 @@ const fetchTrafficData = route => dispatch => {
 
 }
 
+const clearTrafficData = routeId => ({
+	type: MapActions.CLEAR_TRAFFIC_DATA,
+	routeId
+});
+
 const addRoute = route => ({
 	type: MapActions.ADD_ROUTE,
 	route: {
@@ -63,5 +70,6 @@ export {
 	MapActions,
 	fetchTrafficData,
 	addRoute,
-	deleteRoute
+	deleteRoute,
+	clearTrafficData
 };
