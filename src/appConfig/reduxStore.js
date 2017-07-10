@@ -6,6 +6,7 @@ import {
 	applyMiddleware,
 	compose
 } from 'redux';
+import {reduxActionStreamMiddleware} from './reduxMiddlewares/reduxActionStream';
 import rootReducer from './rootReducer';
 import { persistStore, autoRehydrate } from 'redux-persist';
 
@@ -15,7 +16,7 @@ console.disableYellowBox = true;
 
 function configStore(initState) {
 	const store = createStore(rootReducer, initState, compose(
-		applyMiddleware(thunk, logger),
+		applyMiddleware(thunk, logger, reduxActionStreamMiddleware),
 		autoRehydrate()
 	));
 	return store;

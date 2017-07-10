@@ -5,7 +5,6 @@ import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RouteListContainer from './containers/RouteListContainer';
-
 import navbarButton from '../decorators/navbarButton';
 import {showAddressPicker} from '../lib/addressPickService';
 import { getIcon } from '../icons';
