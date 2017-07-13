@@ -25,6 +25,7 @@ export const latestTrafficData = createSelector(
 	(state, props) => props.route,
 	(trafficData, route) => R.pipe(
 		R.sortBy(d => new Date(d.time)),
-		R.reverse
+		// R.reverse,
+		R.head
 	)(RichArray(trafficData[route.id]))
 )

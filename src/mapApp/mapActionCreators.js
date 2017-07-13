@@ -45,8 +45,19 @@ const fetchTrafficData = route => dispatch => {
 			type: 'FETCH_DIRECTION_DATA_SUCCESS',
 			data
 		}))
+}
 
-
+const fetchTraffic = route => {
+	let { startAddress, endAddress } = route;
+	let fromPlaceId = startAddress.placeId;
+	let toPlaceId = endAddress.placeId;
+	return trafficDuration(fromPlaceId, toPlaceId)
+		.then(data => ({
+			...data,
+			time: new Date(),
+			routeId: route.id,
+			id: createUUID()
+		}));
 }
 
 const clearTrafficData = routeId => ({
@@ -71,5 +82,6 @@ export {
 	fetchTrafficData,
 	addRoute,
 	deleteRoute,
-	clearTrafficData
+	clearTrafficData,
+	fetchTraffic
 };

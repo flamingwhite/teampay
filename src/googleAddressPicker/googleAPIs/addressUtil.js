@@ -1,3 +1,5 @@
+import R from 'ramda';
+
 const apiKey = 'AIzaSyAJAmwOGIGRlWliaI2YbW53FwvHerVfIaE';
 
 export const createGooglePlaceUrl = placeId => `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${apiKey}`;
@@ -45,6 +47,7 @@ export const parseAutocompleteAddress = terms => {
 export const parseLines = parts => {
 	let { number = '', street = '', city, state } = parts;
 	let firstLine, secondLine;
+
 	if (street) {
 		firstLine = `${number} ${street}`;
 		secondLine = `${city}, ${state}`;

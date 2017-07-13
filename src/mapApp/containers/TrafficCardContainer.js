@@ -1,39 +1,48 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import TrafficCard from '../components/TrafficCard';
-import {latestTrafficData} from '../mapSelectors';
-import {fetchTrafficData} from '../mapActionCreators';
-import {reduxActionStream} from '../../appConfig/reduxMiddlewares/reduxActionStream';
+import { latestTrafficData } from '../mapSelectors';
+import { fetchTraffic } from '../mapActionCreators';
+import { reduxActionStream } from '../../appConfig/reduxMiddlewares/reduxActionStream';
+import R from 'ramda';
 
 @connect(
 	(state, props) => ({
-		latestTraffic: latestTrafficData(state, props)
+		trafficData: latestTrafficData(state, props)
 	})
 )
 export default class TrafficCardContainer extends Component {
 	constructor(props) {
 		super(props);
-		const { latestTraffic } = props;
+		// const {latestTraffic} = props;
 		this.state = {
-			loading: true
+			isFetching: true
 		};
 
 	}
 
 	componentWillMount() {
-		const { route, dispatch } = this.props;
-		dispatch(fetchTrafficData(route));
+		const {route, dispatch} = this.props;
+		// dispatch(fetchTrafficData(route));
+		fetchTraffic(route)
+			.then(data => {
+				this.setState({isFetching: false})
 
-		reduxActionStream.subscribe(a => {
-			console.log('wassss listen action', a);
-		})
+
+			})
+
 		
+
+
+
+
 	}
+
 
 	render() {
 		return (
-			<TrafficCard>
+			<TrafficCard {...this.props}>
 			</TrafficCard>
-		);
+			);
 	}
-} 
+}
