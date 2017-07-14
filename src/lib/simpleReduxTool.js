@@ -1,7 +1,7 @@
 import { get, post, put, deletex } from './httpTool';
 
 
-const createReducer = (handlers, initialState) => (state, action) => {
+export const createReducer = (handlers, initialState) => (state, action) => {
 	if (state === undefined) {
 		return initialState;
 	}
@@ -11,14 +11,15 @@ const createReducer = (handlers, initialState) => (state, action) => {
 	return state;
 };
 
-const convertArrayToMirrorAction = arr => arr.reduce((accu, cur) => ({
+export const convertArrayToMirrorAction = arr => arr.reduce((accu, cur) => ({
 	...accu,
 	[cur]: cur
 }), {});
 
-const createAsyncHttpAction = action => convertArrayToMirrorAction([action + "_REQUEST", action + '_SUCCESS', action + '_ERROR']);
+export const createActionsForAsync = actionName => [actionName, `${actionName}_PENDING`, `${actionName}_FULFILLED`, `${actionName}_REJECTED`];
 
-const httpActionDispatcher = ({
+
+export const httpActionDispatcher = ({
 	dispatch,
 	actionName,
 	payload = {},
@@ -66,10 +67,3 @@ const httpActionDispatcher = ({
 
 
 }
-
-export {
-	createReducer,
-	convertArrayToMirrorAction,
-	createAsyncHttpAction,
-	httpActionDispatcher
-};

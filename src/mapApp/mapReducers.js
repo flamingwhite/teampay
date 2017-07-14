@@ -17,7 +17,7 @@ const mapHandlers = {
 		state
 	),
 
-	[MapActions.FETCH_DURATION_SUCCESS]: (state, {
+	[MapActions.FETCH_DURATION_FULFILLED]: (state, {
 		data
 	}) => R.over(
 		R.lensPath(['trafficData', data.routeId]),
@@ -29,7 +29,7 @@ const mapHandlers = {
 		routeId
 	}) => R.over(
 		R.lensProp('routes'),
-		R.filter(r => r.id !== routeId),
+		R.filter(R.complement(R.propEq)('id', routeId)),
 		state
 	),
 

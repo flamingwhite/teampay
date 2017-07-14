@@ -38,6 +38,9 @@ const TrafficCard = props => {
 			<Card>
 				<CardItem>
 					<Body>
+						<Button onPress={onRouteClick}>
+							<Text>Click</Text>
+						</Button>
 						<Text>{startLine}</Text>
 						<Text>{endLine}</Text>
 						<Text>{durationInTraffic}</Text>

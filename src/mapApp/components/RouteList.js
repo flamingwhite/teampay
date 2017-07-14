@@ -7,7 +7,7 @@ import TrafficCardContainer from '../containers/TrafficCardContainer';
 const RouteList = ({routes, onRouteClick}) => {
 	return (
 		<List>
-			{ routes.map(route => <TrafficCardContainer key={ route.id } route={ route } onRouteClick={ onRouteClick } />) }
+			{ routes.map(route => <TrafficCardContainer key={ route.id } route={ route } onRouteClick={ () => onRouteClick(route) } />) }
 		</List>
 		);
 }

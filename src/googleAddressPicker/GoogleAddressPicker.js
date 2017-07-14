@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {Text, StyleSheet, TextInput, View, LayoutAnimation, TouchableHighlight, Keyboard, ScrollView } from 'react-native';
+import {View, LayoutAnimation, TouchableHighlight, ScrollView } from 'react-native';
 import {Item, Input, Icon} from 'native-base';
 import Rx from 'rxjs/Rx';
 import { connect } from 'react-redux';

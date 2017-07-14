@@ -5,9 +5,14 @@ import createUUID from '../lib/uuidTool.js';
 import {
 	Observable
 } from 'rxjs/Rx';
+import {
+	MapActions,
+	fetchDurationFulfilled,
+	fetchDurationRejected
+} from './mapActionCreators';
 
 export const fetchDurationEpic = action$ =>
-	action$.ofType('FETCH_DURATION')
+	action$.ofType(MapActions.FETCH_DURATION)
 	.flatMap(action => {
 		let {
 			route
@@ -27,14 +32,7 @@ export const fetchDurationEpic = action$ =>
 				time: new Date(),
 				routeId: route.id,
 				id: createUUID()
-			})).map(data => ({
-				type: 'FETCH_DURATION_SUCCESS',
-				data
 			}))
-			.catch(err => ({
-				type: 'FETCH_DURATION_ERR',
-				err
-			}));
-
-
+			.map(fetchDurationFulfilled)
+			.catch(fetchDurationRejected);
 	});
