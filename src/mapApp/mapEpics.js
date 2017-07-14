@@ -19,7 +19,7 @@ export const fetchDurationEpic = action$ =>
 		let fromPlaceId = startAddress.placeId;
 		let toPlaceId = endAddress.placeId;
 
-		console.log('running thourgh fetchDurationEpic', route);
+		console.log('running through fetchDurationEpic', route);
 
 		return Observable.fromPromise(trafficDuration(fromPlaceId, toPlaceId))
 			.map(data => ({

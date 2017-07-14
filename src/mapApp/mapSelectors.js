@@ -23,9 +23,8 @@ export const routeTrafficDataSelector = createSelector(
 export const latestTrafficData = createSelector(
 	state => state.mapChunk.trafficData,
 	(state, props) => props.route,
-	(trafficData, route) => R.pipe(
-		R.sortBy(d => new Date(d.time)),
-		// R.reverse,
-		R.head
+	(trafficData, route) => R.reduce(
+		(acc, cur) => acc.time > cur.time ? acc : cur,
+		{}
 	)(RichArray(trafficData[route.id]))
 )

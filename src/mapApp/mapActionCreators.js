@@ -7,58 +7,55 @@ import {
 	trafficDuration
 } from '../googleAddressPicker/googleAPIs';
 
-const syncActions = convertArrayToMirrorAction([
+const MapActions = convertArrayToMirrorAction([
 	'ADD_ROUTE',
 	'DELETE_ROUTE',
 	'CLEAR_TRAFFIC_DATA'
 ]);
 
-const asyncActions = ['FETCH_DIRECTION_DATA'];
+// const asyncActions = ['FETCH_DIRECTION_DATA'];
 
-const MapActions = asyncActions.map(createAsyncHttpAction)
-	.reduce((acc, cur) => ({
-		...acc,
-		...cur
-	}), syncActions);
+// const MapActions = asyncActions.map(createAsyncHttpAction)
+// 	.reduce((acc, cur) => ({
+// 		...acc,
+// 		...cur
+// 	}), syncActions);
 
-// const extractFromDirectionData = data => {
-// 	let route = data.routes[0];
-// 	return {
-// 		duration: route.legs[0].duration_in_traffic.text
-// 	};
-// };
 
-const fetchTrafficData = route => dispatch => {
-	let {
-		startAddress,
-		endAddress
-	} = route;
-	let fromPlaceId = startAddress.placeId;
-	let toPlaceId = endAddress.placeId;
-	return trafficDuration(fromPlaceId, toPlaceId).then(data => ({
-			...data,
-			time: new Date(),
-			routeId: route.id,
-			id: createUUID()
 
-		})).then(data => dispatch({
-			type: 'FETCH_DIRECTION_DATA_SUCCESS',
-			data
-		}))
-}
 
-const fetchTraffic = route => {
-	let { startAddress, endAddress } = route;
-	let fromPlaceId = startAddress.placeId;
-	let toPlaceId = endAddress.placeId;
-	return trafficDuration(fromPlaceId, toPlaceId)
-		.then(data => ({
-			...data,
-			time: new Date(),
-			routeId: route.id,
-			id: createUUID()
-		}));
-}
+
+// const fetchTrafficData = route => dispatch => {
+// 	let {
+// 		startAddress,
+// 		endAddress
+// 	} = route;
+// 	let fromPlaceId = startAddress.placeId;
+// 	let toPlaceId = endAddress.placeId;
+// 	return trafficDuration(fromPlaceId, toPlaceId).then(data => ({
+// 			...data,
+// 			time: new Date(),
+// 			routeId: route.id,
+// 			id: createUUID()
+
+// 		})).then(data => dispatch({
+// 			type: 'FETCH_DIRECTION_DATA_SUCCESS',
+// 			data
+// 		}))
+// }
+
+// const fetchTraffic = route => {
+// 	let { startAddress, endAddress } = route;
+// 	let fromPlaceId = startAddress.placeId;
+// 	let toPlaceId = endAddress.placeId;
+// 	return trafficDuration(fromPlaceId, toPlaceId)
+// 		.then(data => ({
+// 			...data,
+// 			time: new Date(),
+// 			routeId: route.id,
+// 			id: createUUID()
+// 		}));
+// }
 
 const clearTrafficData = routeId => ({
 	type: MapActions.CLEAR_TRAFFIC_DATA,
@@ -79,9 +76,7 @@ const deleteRoute = routeId => ({
 
 export {
 	MapActions,
-	fetchTrafficData,
 	addRoute,
 	deleteRoute,
 	clearTrafficData,
-	fetchTraffic
 };
