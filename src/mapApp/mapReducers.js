@@ -17,7 +17,7 @@ const mapHandlers = {
 		state
 	),
 
-	[MapActions.FETCH_DIRECTION_DATA_SUCCESS]: (state, {
+	[MapActions.FETCH_DURATION_SUCCESS]: (state, {
 		data
 	}) => R.over(
 		R.lensPath(['trafficData', data.routeId]),

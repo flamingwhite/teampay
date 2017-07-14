@@ -62,7 +62,11 @@ class RouteTrafficSummaryScreen extends Component {
 
 	componentWillMount() {
 		let { route, dispatch } = this.props;
-		dispatch(fetchTrafficData(route));
+		dispatch({
+			type: 'FETCH_DURATION',
+			route
+		});
+		// dispatch(fetchTrafficData(route));
 	}
 
 	navigateToRouteEdit() {

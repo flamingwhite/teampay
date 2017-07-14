@@ -23,7 +23,7 @@ const styles = {
 
 const TrafficCard = props => {
 	console.log('traffic card prop ', props);
-	const { route } = props;
+	const { route, onRouteClick } = props;
 	const { startAddress, endAddress } = route;
 
 	const startLine = parseLines(startAddress.parts).firstLine;

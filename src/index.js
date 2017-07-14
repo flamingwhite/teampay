@@ -12,6 +12,7 @@ import {
 
 import {loadIcons, getIcon} from './icons';
 import store from './appConfig/reduxStore';
+import 'rxjs';
 
 registerScreens(store, Provider);
 

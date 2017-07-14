@@ -24,16 +24,19 @@ export default class TrafficCardContainer extends Component {
 	componentWillMount() {
 		const {route, dispatch} = this.props;
 		// dispatch(fetchTrafficData(route));
-		fetchTraffic(route)
-			.then(data => {
-				this.setState({isFetching: false})
+		// fetchTraffic(route)
+		// 	.then(data => {
+		// 		this.setState({isFetching: false})
 
 
-			})
+		// 	})
+		dispatch({
+			type: 'FETCH_DURATION',
+			route
+		})
+	}
 
-		
-
-
+	onCardClick() {
 
 
 	}
