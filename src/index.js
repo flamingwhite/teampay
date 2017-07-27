@@ -17,12 +17,12 @@ import 'rxjs';
 registerScreens(store, Provider);
 
 const navigatorStyle = {
-	navBarTranslucent: true,
-	drawUnderNavBar: true,
-	navBarTextColor: 'white',
-	navBarButtonColor: 'white',
-	statusBarTextColorScheme: 'light',
-	drawUnderTabBar: true
+	// navBarTranslucent: true,
+	// drawUnderNavBar: true,
+	// navBarTextColor: 'white',
+	// navBarButtonColor: 'white',
+	// statusBarTextColorScheme: 'light',
+	// drawUnderTabBar: true
 };
 
 
@@ -52,6 +52,14 @@ function setup() {
 const startApp = () => {
 	Navigation.startTabBasedApp({
 		tabs: [
+			{
+				label: 'One', // tab label as appears under the icon in iOS (optional)
+				screen: 'landingScreen', // unique ID registered with Navigation.registerScreen
+				title: 'RN 30 days', // title of the screen as appears in the nav bar (optional)
+				icon: getIcon('ios-home-outline'),
+				selectedIcon: getIcon('ios-home'),
+				navigatorStyle
+			},
 			{
 				label: 'One', // tab label as appears under the icon in iOS (optional)
 				screen: 'todoMainScreen', // unique ID registered with Navigation.registerScreen

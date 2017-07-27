@@ -13,18 +13,36 @@ import LocationMainScreen from './locationApp/LocationMainScreen';
 import LocationInputScreen from './locationApp/LocationInputScreen';
 import LocationEditScreen from './locationApp/LocationEditScreen';
 import AddressPickScreen from './addressApp/AddressPickScreen';
+import R from 'ramda';
+
+//RN30 days screens
+
+import LandingScreen from './rn30days/LandingScreen';
+import StopWatchScreen from './rn30days/StopWatch';
+
 
 // register all screens of the app (including internal ones)
+
+const screens = {
+	todoMainScreen: TodoMainScreen,
+	testScreen: TestScreen,
+	todoDetailScreen: TodoDetailScreen,
+	mapMainScreen: MapMainScreen,
+	routeInputScreen: RouteInputScreen,
+	routeEditScreen: RouteEditScreen,
+	routeTrafficDetailScreen: RouteTrafficDetailScreen,
+	locationMainScreen: LocationMainScreen,
+	locationInputScreen: LocationInputScreen,
+	locationEditScreen: LocationEditScreen,
+	addressPickScreen: AddressPickScreen,
+	landingScreen: LandingScreen,
+	stopWatchScreen: StopWatchScreen
+};
+
 export function registerScreens(store, Provider) {
-	Navigation.registerComponent('todoMainScreen', () => TodoMainScreen, store, Provider);
-	Navigation.registerComponent('testScreen', () => TestScreen, store, Provider);
-	Navigation.registerComponent('todoDetailScreen', () => TodoDetailScreen, store, Provider);
-	Navigation.registerComponent('mapMainScreen', () => MapMainScreen, store, Provider);
-	Navigation.registerComponent('routeInputScreen', () => RouteInputScreen, store, Provider);
-	Navigation.registerComponent('routeEditScreen', () => RouteEditScreen, store, Provider);
-	Navigation.registerComponent('routeTrafficDetailScreen', () => RouteTrafficDetailScreen, store, Provider);
-	Navigation.registerComponent('locationMainScreen', () => LocationMainScreen, store, Provider);
-	Navigation.registerComponent('locationInputScreen', () => LocationInputScreen, store, Provider);
-	Navigation.registerComponent('locationEditScreen', () => LocationEditScreen, store, Provider);
-	Navigation.registerComponent('addressPickScreen', () => AddressPickScreen, store, Provider);
+
+	const register = ([name, component]) => Navigation.registerComponent(name, () => component, store, Provider);
+
+	Object.entries(screens).map(register);
+
 }

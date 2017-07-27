@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Interactable from 'react-native-interactable';
+// import Interactable from 'react-native-interactable';
 
 export default class SwipeableCard extends Component {
   render() {
     return (
       <View style={styles.container}>
 
-        <Interactable.View
+			{/* <Interactable.View
           key="first"
           horizontalOnly={true}
           snapPoints={[
@@ -38,7 +38,7 @@ export default class SwipeableCard extends Component {
             {x: -360}
           ]}>
           <View style={styles.card} />
-        </Interactable.View>
+        </Interactable.View> */}
 
       </View>
     );
