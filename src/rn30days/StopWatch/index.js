@@ -139,10 +139,7 @@ export default class StopWatchScreen extends Component {
 	}
 	tap() {
 		const {taps, ticks} = this.state;
-		const newTap = R.subtract(ticks)(R.pipe(
-			R.last,
-			R.defaultTo(0)
-		)(taps));
+		const newTap = ticks - taps.reduce((acc, cur) => acc + cur, 0);
 		this.setState({
 			taps: taps.concat(newTap)
 		});
