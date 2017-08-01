@@ -71,38 +71,28 @@ const WatchFace = ({ ticks }) => (
 	</View>
 );
 
-const ControlButton = props => {
-	const { onPress, color, text, visible} = props;
-	return (
-		<TouchableOpacity style={styles.controlBtn} onPress={onPress}>
-			<Text style={{color}}>{text}</Text>
-		</TouchableOpacity>
-	)
-}
+const ControlButton = ({ onPress, color, text, visible})  => (
+	<TouchableOpacity style={styles.controlBtn} onPress={onPress}>
+		<Text style={{color}}>{text}</Text>
+	</TouchableOpacity>
+)
 
-const ControlPanel = props => {
-	const {start, stop, reset, tap, init, running} = props;
-	return (
-		<View style={styles.watchControl}>
-			{ init && <ControlButton text="Idle" color="red"/>}
-			{ running && <ControlButton onPress={tap} text="Tap" color="gray"/>}
-			{ !init && !running && <ControlButton onPress={reset} text="Reset" color="red"/>}
-			{ !running && <ControlButton onPress={start} text="Start" color="green"/>}
-			{ running && <ControlButton onPress={stop} text="Stop" color="red"/>}
-		</View>
-	)
-}
 
-const RecordPanel = props => {
-	const { taps =[] } = props;
-	return (
-		<Content>
-			{
-				taps.map(t => <Text>{displayTicks(t)}</Text>)
-			}
-		</Content>
-	)
-}
+const ControlPanel =({start, stop, reset, tap, init, running}) => (
+	<View style={styles.watchControl}>
+		{ init && <ControlButton text="Idle" color="red"/>}
+		{ running && <ControlButton onPress={tap} text="Tap" color="gray"/>}
+		{ !init && !running && <ControlButton onPress={reset} text="Reset" color="red"/>}
+		{ !running && <ControlButton onPress={start} text="Start" color="green"/>}
+		{ running && <ControlButton onPress={stop} text="Stop" color="red"/>}
+	</View>
+)
+
+const RecordPanel = ({taps = []}) => (
+	<Content>
+		{ taps.map(t => <Text>{displayTicks(t)}</Text>) }
+	</Content>
+)
 
 @connect()
 export default class StopWatchScreen extends Component {
@@ -162,9 +152,6 @@ export default class StopWatchScreen extends Component {
 	render() {
 		const {start, stop, tap, reset} = this;
 		const {ticks, taps, init, running} = this.state;
-		const renderTimer = ticks => <Text style={{ fontSize: 50 }}>{displayTicks(ticks)}</Text>;
-		const renderTaps = taps => taps.map(renderTimer)
-
 		return (
 			<Container>
 				<WatchFace ticks={ticks} />
