@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Container, Content, Text, Button} from 'native-base';
+import {View} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import R from 'ramda';
@@ -9,6 +10,98 @@ const displayTicks = ticks => {
 	const secs = Math.floor(ticks / 100);
 	const minutes = Math.floor(secs / 60);
 	return `${minutes}: ${secs%60} : ${ticks%100}`;
+}
+
+const styles = {
+	mainWatch: {
+		font: 30,
+		height: 150,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	watchControl: {
+		backgroundColor: 'lightgray',
+		height: 150,
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		alignItems: 'center'
+
+	},
+	controlBtn: {
+		width: 70,
+		height: 70,
+		borderRadius: 35,
+		backgroundColor: "#fff",
+		alignItems: "center",
+		justifyContent: "center"
+
+	},
+	recordPanel: {
+		flex: 1
+	},
+	bottom: {
+		backgroundColor: 'lightgray',
+		flex:4
+	},
+	buttons: {
+		flex: 1,
+		justifyContent: 'center',
+		flexDirection: 'row',
+		display: 'flex',
+		alignItems: 'center'
+	},
+	functionButton: {
+		backgroundColor: 'white',
+		color: 'red',
+		borderRadius: 50,
+		height: 100,
+		width: 100,
+
+
+	},
+	startButton: {
+		...this.functionButton,
+		color: 'green'
+	}
+}
+
+const WatchFace = ({ ticks }) => (
+	<View style={styles.mainWatch}>
+		<Text style={{ fontSize: 50 }}>{displayTicks(ticks)}</Text>
+	</View>
+);
+
+const ControlButton = props => {
+	const { onPress, color, text, visible} = props;
+	return (
+		<TouchableOpacity style={styles.controlBtn} onPress={onPress}>
+			<Text style={{color}}>{text}</Text>
+		</TouchableOpacity>
+	)
+}
+
+const ControlPanel = props => {
+	const {start, stop, reset, tap, init, running} = props;
+	return (
+		<View style={styles.watchControl}>
+			{ init && <ControlButton text="Idle" color="red"/>}
+			{ running && <ControlButton onPress={tap} text="Tap" color="gray"/>}
+			{ !init && !running && <ControlButton onPress={reset} text="Reset" color="red"/>}
+			{ !running && <ControlButton onPress={start} text="Start" color="green"/>}
+			{ running && <ControlButton onPress={stop} text="Stop" color="red"/>}
+		</View>
+	)
+}
+
+const RecordPanel = props => {
+	const { taps =[] } = props;
+	return (
+		<Content>
+			{
+				taps.map(t => <Text>{displayTicks(t)}</Text>)
+			}
+		</Content>
+	)
 }
 
 @connect()
@@ -51,7 +144,7 @@ export default class StopWatchScreen extends Component {
 		})
 	}
 	reset() {
-		this.setState({ ...this.initState, init: true, running: false });
+		this.setState({ ...this.initState });
 
 	}
 	tap() {
@@ -69,39 +162,14 @@ export default class StopWatchScreen extends Component {
 	render() {
 		const {start, stop, tap, reset} = this;
 		const {ticks, taps, init, running} = this.state;
-		const renderTimer = ticks => <Text>{displayTicks(ticks)}</Text>;
+		const renderTimer = ticks => <Text style={{ fontSize: 50 }}>{displayTicks(ticks)}</Text>;
 		const renderTaps = taps => taps.map(renderTimer)
 
 		return (
 			<Container>
-				<Content>
-					{renderTimer(ticks)}
-					{renderTaps(taps)}
-					{
-						running &&
-						<Button onPress={tap}>
-							<Text>Tap</Text>
-						</Button>
-					}
-					{
-						!init && !running &&
-						<Button onPress={reset}>
-							<Text>Reset</Text>
-						</Button>
-					}
-					{
-						!running &&
-						<Button onPress={start}>
-							<Text>Start</Text>
-						</Button>
-					}
-					{
-						running &&
-						<Button onPress={stop}>
-							<Text>Stop</Text>
-						</Button>
-					}
-				</Content>
+				<WatchFace ticks={ticks} />
+				<ControlPanel {...{start, stop, tap, reset, init, running}} />
+				<RecordPanel {...{taps}}/>
 			</Container>
 
 		);
